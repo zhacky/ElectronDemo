@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login - Authorization</title>
+</head>
+<link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="../styles/login.css">
+<body>
+
+<div class="vertical-center">
+	<div class="container">
+			<div class="logo pb-5"><img src="../images/teeth-icon.png" alt=""></div>
+		<form>
+			<div class="form-group">
+				<input class="form-control" type="text" id="username" placeholder="Username" required />
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" id="password" placeholder="Password" required/>
+			</div>
+            <div class="form-group"><span class="validation"></span></div>
+				<button type="submit" class="btn btn-primary" id="loginButton" name="login">Login</button>
+		</form>
+	</div>
+
+</div>
+<!-- allow jquery -->
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<!-- normal scripts -->
+<script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../scripts/aes.js"></script>
+<!-- detect jquery -->
+<script>if (window.module) module = window.module;</script>
+
+<script>
+    const electron = require('electron');
+    const { ipcRenderer } = electron;
+    const form = document.querySelector('form');
+    const fs = require('fs');
+    const path = require('path');
+    const inc = path.join(__dirname, '../scripts/inc.dat');
+    // Synchronous read
+    const data = fs.readFileSync( inc );
+    const dataArray = data.toString().match(/[^\r\n]+/g);
+    var item = ' loginWindow';
+    // add submit function
+    form.addEventListener('submit', submitForm );
+
+
+
+    function submitForm(e){
+        e.preventDefault();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        // stored data
+        var admin =dataArray[0];
+        var encrypted_pw = dataArray[1];
+        var pwBytes = CryptoJS.AES.decrypt(encrypted_pw, 'DentalApp');
+        var pw = pwBytes.toString(CryptoJS.enc.Utf8);
+        //
+        $('span.validation').html = '';
+        var encrypted = CryptoJS.AES.encrypt(password, 'DentalApp');
+        console.log('saved pw: ' + pw + ' entered pw: ' + password + ' encrypted: ' + encrypted);
+
+        if( username == admin && password == pw ) {
+
+            ipcRenderer.send('login:submit', item);
+
+        } else {
+            $('span.validation').html('Username or Password is incorrect.');
+        }
+
+    }
+
+    $(document).ready(() => {
+        $('#username').focus();
+     });
+</script>
+</body>
+</html>

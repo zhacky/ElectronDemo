@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+<link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="./../assets/font/css/open-iconic-bootstrap.min.css">
+<link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+    <div class="container pt-5">
+        <form>
+            <div class="input-group">
+                <input type="search" name="search" class="form-control" placeholder="Search...">
+                <div class="options ml-2">
+                    <button class="btn btn-outline-info" id="new-profile" type="button">Create New Profile</button>
+                </div>
+            </div>
+        </form>
+
+        <hr>
+
+        <div class="profile-list">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><a href="">Last&nbsp;Name</a></th>
+                        <th><a href="">First&nbsp;Name</a></th>
+                        <th><a href="">Middle&nbsp;Name</a></th>
+                        <th><a href="">Sex</a></th>
+                        <th><a href="">Age</a></th>
+                        <th><a href="">Address</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<!-- allow jquery -->
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<!-- normal scripts -->
+<script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- detect jquery -->
+<script>if (window.module) module = window.module;</script>
+<!-- custom scripts -->
+<script>
+    const electron = require('electron');
+    const { ipcRenderer } = electron;
+// create click event for new profile
+var item = null;
+$('#new-profile').on('click',() => {
+    ipcRenderer.send('profile:create', item);
+     });
+
+</script>
+</body>
+</html>
