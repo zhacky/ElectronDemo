@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./../assets/font/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/settings.css">
+</head>
+<body>
+<div class="container">
+    <div class="bio-data p-5">
+    <form>
+        <div class="row">
+            <!-- password change -->
+        <div class="password-change col-md-5">
+            <p>Change Admin Username</p>
+            <div class="form-group">
+                <label for="username">Admin Username</label>
+                <input type="text" class="form-control" id="username">
+            </div>
+            <p>Change Admin Password</p>
+            <div class="form-group">
+                <label for="old-password">Old Password</label><input id="old-password" class="form-control" type="text">
+            </div>
+             <div class="form-group">
+                <label for="new-password">New Password</label><input id="new-password" class="form-control" type="text">
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label><input id="confirm-password" class="form-control" type="text">
+            </div>
+        </div>       <!-- end password change -->
+        </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+        <div class="row">
+            <div class="database-path col-md-5">
+               <!--  <p>Change Database Path</p>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="databasePath01">
+                    <label for="databasePath01" class="custom-file-label">Choose Database Path</label>
+                </div> -->
+            </div>
+            <div class="col-md-5">
+            </div>
+        </div>        <!-- end database path -->
+    </div>
+</div>
+            <hr>
+
+<!-- allow jquery -->
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<!-- normal scripts -->
+<script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- detect jquery -->
+<script>if (window.module) module = window.module;</script>
+<!-- custom scripts -->
+<script>
+</script>
+</body>
+</html>

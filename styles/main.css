@@ -1,9 +1,12 @@
 .container {
 }
-.profile-list table a {
-    text-decoration: none;
-    color: #4c4c4c;
+.table {
+    font-size: small;
 }
-.profile-list table a:hover {
+.profile-list table thead a {
+    text-decoration: none;
+    color: #fff;
+}
+.profile-list table thead a:hover {
     color: #7c7c7c;
 }

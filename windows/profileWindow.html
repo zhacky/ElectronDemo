@@ -10,42 +10,56 @@
 <body>
 <div class="container">
     <form>
-
-    <div class="bio-data p-5">
-        <div class="row">
-
-            <div class="form-group col">
-                <label for="firstname">Firstname</label><input id="firstname" class="form-control" type="text">
+        <!-- tab navigations -->
+        <ul class="nav nav-tabs" id="profileTab" role="tablist">
+            <li class="nav-item"><a href="#bio-data" id="#bio-data-tab" class="nav-link active" data-toggle="tab" role="tab">Bio Data</a></li>
+            <li class="nav-item"><a href="#dental-history" id="#dental-history-tab" class="nav-link" data-toggle="tab" role="tab">Dental History</a></li>
+            <li class="nav-item"><a href="#medical-history" id="#medical-history-tab" class="nav-link" data-toggle="tab" role="tab">Medical History</a></li>
+            <li class="nav-item"><a href="#dental-chart" id="#dental-chart-tab" class="nav-link" data-toggle="tab" role="tab">Dental Chart</a></li>
+        </ul>
+        <!-- tab contents -->
+        <div class="bio-data p-5">
+            <div class="row">  <!-- NAME -->
+                <div class="form-group col">
+                    <label for="firstname">Firstname</label><input id="firstname" class="form-control" type="text" required>
+                </div>
+                 <div class="form-group col">
+                    <label for="middlename">Middlename</label><input id="middlename" class="form-control" type="text" required>
+                </div>
+                <div class="form-group col">
+                    <label for="lastname">Lastname</label><input id="lastname" class="form-control" type="text" required>
+                </div>
             </div>
-             <div class="form-group col">
-                <label for="middlename">Middlename</label><input id="middlename" class="form-control" type="text">
+            <div class="row"> <!-- SEX & AGE -->
+                <div class="col-md-2">
+                    <label for="sex">Sex</label>
+                    <div class="form-check">
+                        <input type="radio" name="sex" id="male" class="form-check-input" value="male" checked>
+                        <label for="male" class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" name="sex" id="female" class="form-check-input" value="female">
+                        <label for="female" class="form-check-label">Female</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input type="number" cols=4 class="form-control" name="age" id="age" required>
+                    </div>
+                </div>
             </div>
-            <div class="form-group col">
-                <label for="lastname">Lastname</label><input id="lastname" class="form-control" type="text">
+            <div class="row">   <!-- ADDRESS -->
+                <div class="col-md-6">
+                    <label for="home-address">Home Address</label>
+                    <input type="text" id="home-address" class="form-control">
+                </div>
             </div>
+                <hr>
+        &nbsp;<em><span class="notification"></span></em><br>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-outline-primary close-button">Close</button>
         </div>
-        <div class="row">
-            <div class="col-md-2">
-                <label for="sex">Sex</label>
-                <div class="form-check">
-                    <input type="radio" name="sex" id="male" class="form-check-input" value="male">
-                    <label for="male" class="form-check-label">Male</label>
-                </div>
-                <div class="form-check">
-                    <input type="radio" name="sex" id="female" class="form-check-input" value="female">
-                    <label for="female" class="form-check-label">Female</label>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <label for="age">Age</label>
-                    <input type="number" cols=4 class="form-control" name="age" id="age">
-                </div>
-            </div>
-        </div>
-            <hr>
-    <button type="submit" class="btn btn-primary">Save</button>
-    </div>
     </form>
 </div>
 
@@ -57,5 +71,6 @@
 <!-- detect jquery -->
 <script>if (window.module) module = window.module;</script>
 <!-- custom scripts -->
+<script type="text/javascript" src="../scripts/profile-window.js"></script>
 </body>
 </html>

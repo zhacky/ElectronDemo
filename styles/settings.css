@@ -1,0 +1,4 @@
+.password-change p, .database-path p {
+    text-transform: uppercase;
+    font-weight: bold;
+}
