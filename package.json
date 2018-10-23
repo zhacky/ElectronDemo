@@ -2,7 +2,7 @@
   "name": "dentistapp",
   "version": "1.0.0",
   "description": "Dental Patient System",
-  "main": "./scripts/main.js",
+  "main": "./scripts/index.js",
   "scripts": {
     "start": "electron ."
   },

@@ -1,6 +1,10 @@
 body {
     font-size: small;
+    color: #657565;
+}
+#profileTab .nav-item a{
+    color: #657565;
 }
 .notification {
-    color: #ff0000;
+    color: #ff2b1a;
 }

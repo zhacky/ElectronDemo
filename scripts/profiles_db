@@ -1,5 +1,9 @@
+{"firstname":"Aladdin","middlename":"D","lastname":"Alawi","sex":"male","age":"36","address":"Camella Homes","_id":"11uG1A8fLd2Mnwzn"}
 {"_id":"KaWeyRKe7K3OfJ3P","firstname":"Green","middlename":"James","lastname":"Gary","sex":"female","age":"28","address":"adsfasdf"}
 {"firstname":"Zhack","middlename":"D","lastname":"Ariya","sex":"female","age":"23","address":"asd","_id":"VQrDSv05MRasMpsP"}
 {"_id":"eiJl2jwIX0B20Xe9","firstname":"Zhack","middlename":"D","lastname":"Ariya","sex":"female","age":"25","address":"nazareth"}
 {"_id":"rUaG0k7q0ncNZQA4","firstname":"Zhack","middlename":"D","lastname":"Ariya","sex":"male","age":"22","address":""}
 {"_id":"zIAKcagoSZqDewqx","firstname":"Zhack","middlename":"D","lastname":"Ariya","sex":"female","age":"24","address":""}
+{"$$deleted":true,"_id":"zIAKcagoSZqDewqx"}
+{"$$deleted":true,"_id":"rUaG0k7q0ncNZQA4"}
+{"$$deleted":true,"_id":"eiJl2jwIX0B20Xe9"}

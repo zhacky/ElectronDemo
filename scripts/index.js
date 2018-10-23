@@ -6,14 +6,16 @@ const {app, BrowserWindow, ipcMain } = electron;
 let mainWindow;
 let loginWindow;
 let profileWindow;
+let settingsWindow;
 
 // Listen for app to be ready
 app.on('ready', () => {
    createMainWindow();
+   // createLoginWindow();
 });
-/*----------------------------------------
-*              MAIN WINDOW
----------------------------------------*/
+/*----------------------------------------*
+ *              MAIN WINDOW               *
+ *----------------------------------------*/
 function createMainWindow(){
     mainWindow = new BrowserWindow({width: 1280, height: 1024});
     mainWindow.loadURL(url.format({
@@ -24,9 +26,9 @@ function createMainWindow(){
     mainWindow.setMenuBarVisibility(false);
     mainWindow.on('close',() => { mainWindow = null; });
 }
-/*----------------------------------------
-*              LOGIN WINDOW
----------------------------------------*/
+/*----------------------------------------*
+ *              LOGIN WINDOW              *
+ *----------------------------------------*/
 function createLoginWindow(){
     loginWindow = new BrowserWindow({});
     loginWindow.loadURL(url.format({
@@ -34,12 +36,12 @@ function createLoginWindow(){
         protocol: 'file:',
         slashes: true
     }));
-    loginWindow.setMenu(null);   //remove menu
+    loginWindow.setMenuBarVisibility(false);  //remove menu
     loginWindow.on('close', () => { loginWindow = null; });
 }
-/*----------------------------------------
-*              PROFILE WINDOW
----------------------------------------*/
+/*----------------------------------------*
+ *              PROFILE WINDOW            *
+ *----------------------------------------*/
 function createProfileWindow() {
     profileWindow = new BrowserWindow({width: 1280, height: 1024});
     profileWindow.loadURL(url.format({
@@ -50,9 +52,23 @@ function createProfileWindow() {
     profileWindow.setMenuBarVisibility(false);   //remove menu
     profileWindow.on('close', () => { profileWindow = null; createMainWindow(); });
 }
-/*----------------------------------------
-*              IPC ACTIVITIES
----------------------------------------*/
+/*----------------------------------------*
+ *              SETTINGS WINDOW           *
+ *----------------------------------------*/
+ function createSettingsWindow(){
+    settingsWindow = new BrowserWindow({width:1280, height: 1024 });
+    settingsWindow.loadURL(url.format({
+        pathname: path.join(__dirname, '../windows/settingsWindow.html'),
+        protocol: 'file:',
+        slashes: true
+    }));
+    settingsWindow.setMenuBarVisibility(false); //remove menu
+    settingsWindow.on('close', () => {
+    settingsWindow = null; createMainWindow(); });
+ }
+/*----------------------------------------*
+ *              IPC ACIVITIES             *
+ *----------------------------------------*/
 ipcMain.on('login:submit', ( e, item ) => {
         createMainWindow();
      loginWindow.close();
@@ -71,8 +87,15 @@ ipcMain.on('profile:edit', (e, item) => {
         });
         mainWindow.close();
 });
-
+// settings
+ipcMain.on('settings:open', (e,item) => {
+        createSettingsWindow();
+        mainWindow.close();
+ });
 ipcMain.on('profile:close',(e,item) => {
         profileWindow.close();
  });
-
+// console log
+ipcMain.on('console:log', (e,item) => {
+    console.log('Log: ' + e);
+ });

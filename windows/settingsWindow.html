@@ -17,20 +17,21 @@
             <p>Change Admin Username</p>
             <div class="form-group">
                 <label for="username">Admin Username</label>
-                <input type="text" class="form-control" id="username">
+                <input type="text" class="form-control" id="username" required>
             </div>
             <p>Change Admin Password</p>
             <div class="form-group">
-                <label for="old-password">Old Password</label><input id="old-password" class="form-control" type="text">
+                <label for="old-password">Old Password</label><input id="old-password" class="form-control" type="password">
             </div>
              <div class="form-group">
-                <label for="new-password">New Password</label><input id="new-password" class="form-control" type="text">
+                <label for="new-password">New Password</label><input id="new-password" class="form-control" type="password">
             </div>
             <div class="form-group">
-                <label for="confirm-password">Confirm Password</label><input id="confirm-password" class="form-control" type="text">
+                <label for="confirm-password">Confirm Password</label><input id="confirm-password" class="form-control" type="password">
             </div>
         </div>       <!-- end password change -->
         </div>
+        &nbsp;<em><span class="notification"></span></em><br>
     <button type="submit" class="btn btn-primary">Save</button>
     </form>
         <div class="row">
@@ -53,10 +54,10 @@
 <!-- normal scripts -->
 <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../scripts/aes.js"></script>
 <!-- detect jquery -->
 <script>if (window.module) module = window.module;</script>
 <!-- custom scripts -->
-<script>
-</script>
+<script type="text/javascript" src="../scripts/settings-window.js"></script>
 </body>
 </html>

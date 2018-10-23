@@ -4,9 +4,8 @@ const { ipcRenderer } = electron;
 var Datastore = require('nedb');
 var path = require('path');
 var dbpath = path.join(__dirname,'../scripts/profiles_db');
-var db = new Datastore({filename: dbpath });
-db.loadDatabase(function(err){
-});
+var db = new Datastore({filename: dbpath, autoload: true });
+
 var profiles = [];
 var selected;
 // load list to table
@@ -85,11 +84,7 @@ $('#search-select').change(function(){
     console.log('selection: ' + selection);
 });
 
-// create click event for new profile
-$('#new-profile').on('click',() => {
-    var item = null;
-    ipcRenderer.send('profile:create', item);
-     });
+
 
 // create query for search-selection
 function getQuery( selection, arg ) {
@@ -118,3 +113,16 @@ function getQuery( selection, arg ) {
             break;
     }
 }
+/*----------------------------------------*
+ *              IPC RENDERER              *
+ *----------------------------------------*/
+// create click event for new profile
+$('#new-profile').on('click',() => {
+    var item = null;
+    ipcRenderer.send('profile:create', item);
+});
+// create click event for settings
+$('#settings').on('click', () => {
+    var item = null;
+    ipcRenderer.send('settings:open', item);
+ });
