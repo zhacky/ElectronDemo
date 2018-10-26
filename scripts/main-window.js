@@ -65,9 +65,14 @@ function loadRows(){
     // create click event for delete row
     $('.delete-button').on('click', function() {
         var id = $(this).attr('id');
-        deleteRow(id);
+    ipcRenderer.send('main:confirm-delete', id);
     });
 }
+// delete confirmation
+ipcRenderer.on('main:confirmed-delete', (e, item) => {
+var id = item;
+deleteRow(id);
+ });
 // initial load
 $(document).ready(() => {
     $('input[name=search]').focus();

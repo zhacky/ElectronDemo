@@ -5,6 +5,11 @@
         <title>Profile</title>
         <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="./../assets/font/css/open-iconic-bootstrap.min.css">
+        <!-- dental chart -->
+        <link rel="stylesheet" href="./../scripts/jquery/jquery-ui.min.css">
+        <link rel="stylesheet" href="./../scripts/jquery/jquery-ui.theme.min.css">
+        <link rel="stylesheet" href="./../styles/marks.css">
+        <link rel="stylesheet" href="./../styles/dentalchart.css">
         <link rel="stylesheet" href="../styles/profile.css">
     </head>
     <body>
@@ -14,8 +19,8 @@
                 <ul class="nav nav-tabs" id="profileTab" role="tablist">
                     <li class="nav-item"><a href="#bio-data" id="#bio-data-tab" class="nav-link" data-toggle="tab" role="tab">Bio Data</a></li>
                     <li class="nav-item"><a href="#dental-history" id="#dental-history-tab" class="nav-link" data-toggle="tab" role="tab">Dental History</a></li>
-                    <li class="nav-item"><a href="#medical-history" id="#medical-history-tab" class="nav-link active" data-toggle="tab" role="tab">Medical History</a></li>
-                    <li class="nav-item"><a href="#dental-chart" id="#dental-chart-tab" class="nav-link" data-toggle="tab" role="tab">Dental Chart</a></li>
+                    <li class="nav-item"><a href="#medical-history" id="#medical-history-tab" class="nav-link" data-toggle="tab" role="tab">Medical History</a></li>
+                    <li class="nav-item"><a href="#dental-chart" id="#dental-chart-tab" class="nav-link active" data-toggle="tab" role="tab">Dental Chart</a></li>
                 </ul>
                 <!-- tab contents -->
                 <div class="tab-content" id="profileTabContent">
@@ -140,7 +145,7 @@
             </div> -->
         </div>
         </div><!-- end dental-history -->
-        <div class="tab-pane fade  show active" id="medical-history" role="tab-panel">
+        <div class="tab-pane fade" id="medical-history" role="tab-panel">
             <div class="medical-history p-5">
                 <div class="row">
                     <div class="col">
@@ -170,8 +175,8 @@
                     </div>
                     <div class="col">
                         <div class="">
-                            <input type="radio" class="" name="good-health" id="good-health-yes"> <label for="good-health-yes">Yes</label>
-                            <input type="radio" class="" name="good-health" id="good-health-no"> <label for="good-health-no">No</label>
+                            <input type="radio" class="" name="good-health" id="good-health-yes" value="yes"> <label for="good-health-yes">Yes</label>
+                            <input type="radio" class="" name="good-health" id="good-health-no" value="no"> <label for="good-health-no">No</label>
                         </div>
                     </div>
                 </div>
@@ -181,8 +186,8 @@
                     </div>
                     <div class="col">
                         <div class="">
-                            <input type="radio" class="" name="medical-treatment" id="medical-treatment-yes"> <label for="medical-treatment-yes">Yes</label>
-                            <input type="radio" class="" name="medical-treatment" id="medical-treatment-no"> <label for="medical-treatment-no">No</label>
+                            <input type="radio" class="" name="medical-treatment" id="medical-treatment-yes" value="yes"> <label for="medical-treatment-yes">Yes</label>
+                            <input type="radio" class="" name="medical-treatment" id="medical-treatment-no" value="no"> <label for="medical-treatment-no">No</label>
                         </div>
                     </div>
                 </div>
@@ -199,8 +204,8 @@
                     </div>
                     <div class="col">
                         <div class="">
-                            <input type="radio" class="" name="serious-illness" id="serious-illness-yes"> <label for="serious-illness-yes">Yes</label>
-                            <input type="radio" class="" name="serious-illness" id="serious-illness-no"> <label for="serious-illness-no">No</label>
+                            <input type="radio" class="" name="serious-illness" id="serious-illness-yes" value="yes"> <label for="serious-illness-yes">Yes</label>
+                            <input type="radio" class="" name="serious-illness" id="serious-illness-no" value="no"> <label for="serious-illness-no">No</label>
                         </div>
                     </div>
                 </div>
@@ -217,8 +222,8 @@
                     </div>
                     <div class="col">
                         <div class="">
-                            <input type="radio" class="" name="hospitalized" id="hospitalized-yes"> <label for="hospitalized-yes">Yes</label>
-                            <input type="radio" class="" name="hospitalized" id="hospitalized-no"> <label for="hospitalized-no">No</label>
+                            <input type="radio" class="" name="hospitalized" id="hospitalized-yes" value="yes"> <label for="hospitalized-yes">Yes</label>
+                            <input type="radio" class="" name="hospitalized" id="hospitalized-no" value="no"> <label for="hospitalized-no">No</label>
                         </div>
                     </div>
                 </div>
@@ -235,8 +240,8 @@
                     </div>
                     <div class="col">
                         <div class="">
-                            <input type="radio" class="" name="prescription" id="prescription-yes"> <label for="prescription-yes">Yes</label>
-                            <input type="radio" class="" name="prescription" id="prescription-no"> <label for="prescription-no">No</label>
+                            <input type="radio" class="" name="prescription" id="prescription-yes" value="yes"> <label for="prescription-yes">Yes</label>
+                            <input type="radio" class="" name="prescription" id="prescription-no" value="no"> <label for="prescription-no">No</label>
                         </div>
                     </div>
                 </div>
@@ -253,8 +258,8 @@
                     </div>
                     <div class="col">
                         <div class="">
-                            <input type="radio" class="" name="tobacco" id="tobacco-yes"> <label for="tobacco-yes">Yes</label>
-                            <input type="radio" class="" name="tobacco" id="tobacco-no"> <label for="tobacco-no">No</label>
+                            <input type="radio" class="" name="tobacco" id="tobacco-yes" value="yes"> <label for="tobacco-yes">Yes</label>
+                            <input type="radio" class="" name="tobacco" id="tobacco-no" value="no"> <label for="tobacco-no">No</label>
                         </div>
                     </div>
                 </div>
@@ -264,8 +269,8 @@
                     </div>
                     <div class="col">
                         <div class="">
-                            <input type="radio" class="" name="alcohol-drugs" id="alcohol-drugs-yes"> <label for="alcohol-drugs-yes">Yes</label>
-                            <input type="radio" class="" name="alcohol-drugs" id="alcohol-drugs-no"> <label for="alcohol-drugs-no">No</label>
+                            <input type="radio" class="" name="alcohol-drugs" id="alcohol-drugs-yes" value="yes"> <label for="alcohol-drugs-yes">Yes</label>
+                            <input type="radio" class="" name="alcohol-drugs" id="alcohol-drugs-no" value="no"> <label for="alcohol-drugs-no">No</label>
                         </div>
                     </div>
                 </div>
@@ -274,25 +279,25 @@
                         <p>Are you allergic to any of the following?</p>
                         <div class="checkbox-group">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="lidocaine"><label for="lidocaine" class="form-check-label">Lidocaine</label>
+                                <input type="checkbox" class="form-check-input" id="lidocaine" value="Lidocaine"><label for="lidocaine" class="form-check-label">Lidocaine</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="sulfa-drugs"><label for="sulfa-drugs" class="form-check-label">Sulfa-drugs</label>
+                                <input type="checkbox" class="form-check-input" id="sulfa-drugs" value="Sulfa Drugs"><label for="sulfa-drugs" class="form-check-label">Sulfa-drugs</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="aspirin"><label for="aspirin" class="form-check-label">Aspirin</label>
+                                <input type="checkbox" class="form-check-input" id="aspirin" value="Aspirin"><label for="aspirin" class="form-check-label">Aspirin</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="latex"><label for="latex" class="form-check-label">Latex</label>
+                                <input type="checkbox" class="form-check-input" id="latex" value="Latex"><label for="latex" class="form-check-label">Latex</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="penicillin"><label for="penicillin" class="form-check-label">Penicillin</label>
+                                <input type="checkbox" class="form-check-input" id="penicillin" value="Penicillin"><label for="penicillin" class="form-check-label">Penicillin</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="antibiotics"><label for="antibiotics" class="form-check-label">Antibiotics</label>
+                                <input type="checkbox" class="form-check-input" id="antibiotics" value="Antibiotics"><label for="antibiotics" class="form-check-label">Antibiotics</label>
                             </div>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="allergies-others"><label for="allergies-others" class="form-check-label">Others</label>
+                                <input type="checkbox" class="form-check-input" id="allergies-others" value="Other Allergies"><label for="allergies-others" class="form-check-label">Others</label>
                                 <input type="text" class="" id="other-allergies">
                             </div>
                         </div>
@@ -310,8 +315,8 @@
                     </div>
                     <div class="col">
                         <div class="">
-                            <input type="radio" class="" name="pregnant" id="pregnant-yes"> <label for="pregnant-yes">Yes</label>
-                            <input type="radio" class="" name="pregnant" id="pregnant-no"> <label for="pregnant-no">No</label>
+                            <input type="radio" class="" name="pregnant" id="pregnant-yes" value="yes"> <label for="pregnant-yes">Yes</label>
+                            <input type="radio" class="" name="pregnant" id="pregnant-no" value="no"> <label for="pregnant-no">No</label>
                         </div>
                     </div>
                 </div>
@@ -321,8 +326,8 @@
                     </div>
                     <div class="col">
                         <div class="">
-                            <input type="radio" class="" name="nursing" id="nursing-yes"> <label for="nursing-yes">Yes</label>
-                            <input type="radio" class="" name="nursing" id="nursing-no"> <label for="nursing-no">No</label>
+                            <input type="radio" class="" name="nursing" id="nursing-yes" value="yes"> <label for="nursing-yes">Yes</label>
+                            <input type="radio" class="" name="nursing" id="nursing-no" value="no"> <label for="nursing-no">No</label>
                         </div>
                     </div>
                 </div>
@@ -332,8 +337,8 @@
                     </div>
                     <div class="col">
                         <div class="">
-                            <input type="radio" class="" name="birth-control" id="birth-control-yes"> <label for="birth-control-yes">Yes</label>
-                            <input type="radio" class="" name="birth-control" id="birth-control-no"> <label for="birth-control-no">No</label>
+                            <input type="radio" class="" name="birth-control" id="birth-control-yes" value="yes"> <label for="birth-control-yes">Yes</label>
+                            <input type="radio" class="" name="birth-control" id="birth-control-no" value="no"> <label for="birth-control-no">No</label>
                         </div>
                     </div>
                 </div>
@@ -351,7 +356,7 @@
                         <p>Do you have or have you had any of the following? Check which apply</p>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row diseases-query">
                     <div class="col">
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="high-blood-pressure"><label for="high-blood-pressure" class="form-check-label">High Blood Pressure</label>
@@ -461,22 +466,527 @@
                 </div>
             </div>
             </div><!-- end medical-history -->
-            <div class="tab-pane fade" id="dental-chart" role="tab-panel">
-                </div><!-- end dental-chart -->
-                </div> <!-- end tab contents -->
-                &nbsp;<em><span class="notification"></span></em><br>
-                <button type="submit" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-outline-primary close-button">Close</button>
-            </form>
-        </div>
-        <!-- allow jquery -->
-        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-        <!-- normal scripts -->
-        <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
-        <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- detect jquery -->
-        <script>if (window.module) module = window.module;</script>
-        <!-- custom scripts -->
-        <script type="text/javascript" src="../scripts/profile-window.js"></script>
-    </body>
+            <div class="tab-pane fade show active" id="dental-chart" role="tab-panel">
+                <div class="dental-chart-body">
+                    <div class="teeth-container">
+                        <div class="chart">
+                            <section class="upper-teeth">
+                                <section class="upper-right">
+                                    <div id="tooth-1" class="tooth-container top-container">
+                                        <span class="number">1</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-2" class="tooth-container top-container">
+                                        <span class="number">2</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-3" class="tooth-container top-container">
+                                        <span class="number">3</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-4" class="tooth-container top-container">
+                                        <span class="number">4</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-5" class="tooth-container top-container">
+                                        <span class="number">5</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-6" class="tooth-container top-container">
+                                        <span class="number">6</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-7" class="tooth-container top-container">
+                                        <span class="number">7</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-8" class="tooth-container top-container">
+                                        <span class="number">8</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div class="divider">Upper</div>
+                                <section class="upper-left">
+                                    <div id="tooth-9" class="tooth-container top-container">
+                                        <span class="number">9</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-10" class="tooth-container top-container">
+                                        <span class="number">10</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-11" class="tooth-container top-container">
+                                        <span class="number">11</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-12" class="tooth-container top-container">
+                                        <span class="number">12</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-13" class="tooth-container top-container">
+                                        <span class="number">13</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-14" class="tooth-container top-container">
+                                        <span class="number">14</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-15" class="tooth-container top-container">
+                                        <span class="number">15</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                    <div id="tooth-16" class="tooth-container top-container">
+                                        <span class="number">16</span>
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </section>
+                            <div class="vertical-divider"><span class="div-right">Right</span><span class="div-left">Left</span></div>
+                            <section class="lower-teeth">
+                                <section class="lower-right">
+                                    <div id="tooth-32" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">32</span>
+                                    </div>
+                                    <div id="tooth-31" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">31</span>
+                                    </div>
+                                    <div id="tooth-30" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">30</span>
+                                    </div>
+                                    <div id="tooth-29" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">29</span>
+                                    </div>
+                                    <div id="tooth-28" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">28</span>
+                                    </div>
+                                    <div id="tooth-27" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">27</span>
+                                    </div>
+                                    <div id="tooth-26" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">26</span>
+                                    </div>
+                                    <div id="tooth-25" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">25</span>
+                                    </div>
+                                </section>
+                                <div class="divider">Lower</div>
+                                <section class="lower-left">
+                                    <div id="tooth-24" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">24</span>
+                                    </div>
+                                    <div id="tooth-23" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">23</span>
+                                    </div>
+                                    <div id="tooth-22" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">22</span>
+                                    </div>
+                                    <div id="tooth-21" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">21</span>
+                                    </div>
+                                    <div id="tooth-20" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">20</span>
+                                    </div>
+                                    <div id="tooth-19" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">19</span>
+                                    </div>
+                                    <div id="tooth-18" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">18</span>
+                                    </div>
+                                    <div id="tooth-17" class="tooth-container bottom-container">
+                                        <div class="tooth">
+                                            <div class="space"></div>
+                                            <div class="top"></div>
+                                            <div class="space"></div>
+                                            <div class="left"></div>
+                                            <div class="center"></div>
+                                            <div class="right"></div>
+                                            <div class="space"></div>
+                                            <div class="bottom"></div>
+                                            <div class="space"></div>
+                                        </div>
+                                        <span class="number">17</span>
+                                    </div>
+                                </section>
+                            </section>
+                        </div>
+                        <article class="legend"><span class="title">Legend:</span>
+                        <ul id="condition">
+                            <li id="mk-ok"><div class="mk mk-ok"></div>Present Teeth</li>
+                            <li id="mk-d"><div class="mk mk-d"></div>Decayed</li>
+                            <li id="mk-m"><div class="mk mk-m"></div>Missing due to caries</li>
+                            <li id="mk-mo"><div class="mk mk-mo"></div>Missing due to other causes</li>
+                            <li id="mk-im"><div class="mk mk-im"></div>Impacted tooth</li>
+                            <li id="mk-sp"><div class="mk mk-sp"></div>Supermumerary tooth</li>
+                            <li id="mk-rf"><div class="mk mk-rf"></div>Root fragment</li>
+                            <li id="mk-un"><div class="mk mk-un"></div>Unerupted</li>
+                        </ul>
+                        <ul id="restoration">
+                            <li id="mk-am"><div class="mk mk-am"></div>Amalgam filling</li>
+                            <li id="mk-co"><div class="mk mk-co"></div>Composite filling</li>
+                            <li id="mk-jc"><div class="mk mk-jc"></div>Jacket crown</li>
+                            <li id="mk-ab"><div class="mk mk-ab"></div>Abutment</li>
+                            <li id="mk-p"><div class="mk mk-p"></div>Pontic</li>
+                            <li id="mk-in"><div class="mk mk-in"></div>Inlay</li>
+                            <li id="mk-imp"><div class="mk mk-imp"></div>Implant</li>
+                            <li id="mk-rm"><div class="mk mk-rm"></div>Removable denture</li>
+                        </ul>
+                        <ul id="surgery">
+                            <li id="mk-x"><div class="mk mk-x"></div>Extraction due to caries</li>
+                            <li id="mk-xo"><div class="mk mk-xo"></div>Extraction due to other causes</li>
+                        </ul>
+                        <div class="actions">
+                            <button class="btn-clear" title="Clears selection" value="Clear">CLEAR</button>
+                            <button class="btn-reset" title="Resets all teeth marks" value="Clear">RESET</button>
+                            <button class="btn-save" title="Saves an image copy of the chart">SAVE A COPY</button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            </div><!-- end dental-chart -->
+            </div> <!-- end tab contents -->
+            &nbsp;<em><span class="notification">&nbsp;</span></em><br>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-outline-primary close-button">Close</button>
+            <button type="button" class="btn btn-outline-success print-preview">Preview</button>
+        </form>
+    </div>
+    <!-- allow jquery -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <!-- normal scripts -->
+    <!-- <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script> -->
+    <script type="text/javascript" src="../scripts/jquery/external/jquery/jquery.js"></script>
+    <script type="text/javascript" src="../scripts/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../scripts/libs/html2canvas.min.js"></script>
+    <script type="text/javascript" src="../scripts/libs/FileSaver.min.js"></script>
+    <!-- detect jquery -->
+    <script>if (window.module) module = window.module;</script>
+    <!-- custom scripts -->
+    <script type="text/javascript" src="../scripts/profile-window.js"></script>
+    <script type="text/javascript" src="../scripts/dentalchart.js"></script>
+</body>
 </html>

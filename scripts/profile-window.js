@@ -18,6 +18,44 @@
         var sex = $('input[name=sex]:checked').val();
         var age = $('#age').val();
         var address = $('#home-address').val();
+        var occupation = $('#occupation').val();
+        var dental_insurance = $('#dental-insurance').val();
+        var effective_date = $('#effective-date').val();
+        var guardian_name = $('#guardian-name').val();
+        var guardian_occupation = $('#guardian-occupation').val();
+        var referrer_name = $('#referrer-name').val();
+        var consultation_reason = $('#consultation-reason').val();
+        var dental_history = $('#dental-history').val();
+        var previous_dentist = $('#previous-dentist').val();
+        var last_dentist_visit = $('#last-dental-visit').val();
+        // --- medical history data ---
+        var  physician = $('#physician').val();
+        var specialty = $('#specialty').val();
+        var office_address = $('#office-address').val();
+        var office_number = $('#office-number').val();
+        var good_health = $('input[name=good-health]:checked').val();
+        var medical_treatment = $('input[name=medical-treatment]:checked').val();
+        var medical_condition = $('#medical-condition').val();
+        var serious_illness = $('input[name=serious-illness]:checked').val();
+        var illness_operation = $('#illness-operation').val();
+        var hospitalized = $('input[name=hospitalized]:checked').val();
+        var hospitalized_when = $('#hospitalized-when').val();
+        var prescription = $('input[name=prescription]:checked').val();
+        var prescription_what = $('#prescription-what').val();
+        var tobacco = $('input[name=tobacco]:checked').val();
+        var alcohol_drugs = $('input[name=alcohol-drugs]:checked').val();
+        var other_allergies = $('.allergies-query input:checked').val();
+        var other_allergy = $('#other-allergies').val();
+
+        var pregnant = $('input[name=pregnant]:checked').val();
+        var nursing = $('input[name=nursing]:checked').val();
+        var birth_control = $('input[name=birth-control]:checked').val();
+        var blood_pressure = $('#bloodpressure').val();
+        var blood_type = $('#bloodtype').val();
+        var other_diseases = $('.diseases-query input:checked label').val();
+        // -- dental chart data --
+
+
         // insert into database
         if (profile == null ) {
             console.log('profile is null');
@@ -54,11 +92,14 @@
         } //endif
     }
     // -- get profile key from item --
-ipcRenderer.on('profile-selected', (err,item) => {
+ipcRenderer.on('profile-selected', (e,item) => {
     console.log('received data in profile from main: ' + item);
     getProfile(item);
 
 });
+/*----------  ON wrote-pdf --------------*/
+
+
 // -- get profile using key --
 function getProfile( key ) {
     db.find({_id: key }, (err, doc) => {
@@ -83,6 +124,12 @@ function loadProfile(){
 $('.close-button').on( 'click', () => {
         ipcRenderer.send('profile:close', null);
 });
+// -- preview button --
+$('.print-preview').on( 'click', () => {
+        ipcRenderer.send('profile:preview', null);
+});
+// -- print button --
+
 
 // on document ready, load selected profile if exists
 $(document).ready(function(){

@@ -1,0 +1,26 @@
+body {
+        margin: 48px 96px;  /*72.27em or 1 inch*/
+        width: 816px;  /*614.295 em or 8.51 inches*/
+        height: 1056px;  /*794.97 em or 11 inches*/
+        /*height: 1248px;*/  /*939.51 em or 13 inches*/
+    }
+.inverted {
+    background-color: #696969 !important;
+}
+table td, .ans {
+    font-size: 14px;
+    font-family: monospace;
+}
+.signature {
+    float: right;
+    margin-top:20px;
+    text-align: center;
+    width: 300px;
+    border-top: solid black thin;
+}
+
+@media print {
+    .to-pdf {
+        display: none;
+    }
+}

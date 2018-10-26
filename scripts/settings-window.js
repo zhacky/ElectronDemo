@@ -70,4 +70,12 @@ function submitForm(e){
          });
             return;
     }
-}
+}// end submit form
+
+/*----------------------------------------*
+ *              ipc renderer              *
+ *----------------------------------------*/
+
+ $('.close-button').on( 'click', () => {
+        ipcRenderer.send('settings:close', null);
+});
