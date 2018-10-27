@@ -6,6 +6,9 @@ const fs = require('fs');
 const os = require('os');
 
 const {app, BrowserWindow, ipcMain, shell, dialog } = electron;
+// SET ENV
+process.env.NODE_ENV = 'production';
+
 let mainWindow;
 let loginWindow;
 let profileWindow;
@@ -111,8 +114,11 @@ ipcMain.on('profile:close',(e,item) => {
  });
 // preview
 ipcMain.on('profile:preview', (e,item) => {
-    // profileWindow.close();
+    var profile = item;
     createPreviewWindow();
+    previewWindow.webContents.on('did-finish-load',() => {
+        previewWindow.webContents.send('profile-preview', profile);
+     });
  });
 // print
 ipcMain.on('profile:print',(e,item) => {

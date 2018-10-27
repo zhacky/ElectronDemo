@@ -5,6 +5,11 @@
         <title>Preview Profile</title>
         <link rel="stylesheet" href="../styles/semantic.min.css">
         <link rel="stylesheet" href="../styles/preview.css">
+        <style>
+        th,td {
+        text-transform: capitalize;
+        }
+        </style>
     </head>
     <body>
         <center>
@@ -13,37 +18,36 @@
         </center>
         <table class="ui celled table">
             <tr class="ui inverted table"><th>Last Name</th><th>First Name</th><th>Middle Name</th><th>Nickname</th><th>Sex</th><th>Age</th></tr>
-            <tr><td>Alawi</td><td>Aladdin</td><td>Diampuan</td><td>Zhack</td><td>M</td><td>36</td></tr>
+            <tr><td id="lastname"></td><td id="firstname"></td><td id="middlename"></td><td id="nickname"></td><td id="sex"></td><td id="age"></td></tr>
             <tr class="ui inverted table"><th>Birthdate</th><th>Cel/Tel No.</th><th>Religion</th><th>Nationality</th><th colspan="2">Email Address</th></tr>
-            <tr><td>May 11, 1982</td><td>09056150101</td><td>Islam</td><td>Filipino</td><td>zhacky@gmail.com</td></tr>
+            <tr><td id="birthdate"></td><td id="telephone"></td><td id="religion"></td><td id="nationality"></td><td id="email"></td></tr>
             <tr class="ui inverted table"><th colspan="6">Home Address</th></tr>
-            <tr><td colspan="6">Block 6 Lot 28 Lilac street Camella Homes Upper Balulang, Cagayan de Oro City 9000</td></tr>
+            <tr><td colspan="6" id="home-address"></td></tr>
             <tr class="ui inverted table"><th>Occupation</th><th colspan="2">Dental Insurance</th><th colspan="3">Effective Date</th></tr>
-            <tr><td>Programmer</td><td colspan="2">Dental Ensure</td><td colspan="3">January 1, 2018</td></tr>
+            <tr><td id="occupation"></td><td colspan="2" id="dental-insurance"></td><td colspan="3" id="effective-date"></td></tr>
             <tr class="ui inverted table"><th><em>FOR MINORS</em></th><th colspan="2">Parent / Guardian's Name</th><th colspan="3">Occupation</th></tr>
-            <tr><td></td><td colspan="2">Lindao Mitmug</td><td>Housewife</td></tr>
+            <tr><td></td><td colspan="2" id="guardian-name"></td><td id="guardian-occupation"></td></tr>
             <tr class="ui inverted table"><th colspan="2">Whom may we thank for referring you?</th><th colspan="4">What is your reason for dental consultation?</th></tr>
-            <tr><td colspan="2">Lindao Mitmug</td><td colspan="4">Tooth extraction</td></tr>
+            <tr><td colspan="2" id="referrer-name"></td><td colspan="4" id="consultation-reason"></td></tr>
             <tr class="ui inverted table"><th><em>DENTAL HISTORY</em></th><th colspan="3">Previous Dentist</th><th colspan="2">Last Dental Visit</th></tr>
-            <tr><td></td><td colspan="3">Dra. Aquino</td><td>December 21, 2011</td></tr>
-            <tr class="ui inverted table"><th><em>MEDICAL HISTORY</em></th><th colspan="3">Name of Physician</th><th colspan="2">Specialty, if applicable: </th></tr>
-            <tr><td></td><td colspan="3">Dr. Kho</td><td colspan="3">Internist</td></tr>
+            <tr><td></td><td colspan="3" id="previous-dentist"></td><td id="last-dentist-visit"></td></tr>
+            <tr><td></td><td colspan="3" id="physician"></td><td colspan="3" id="specialty"></td></tr>
             <tr class="ui inverted table"><th colspan="4">Office Address</th><th colspan="2">Office Number</th></tr>
-            <tr><td colspan="4">Rm 101 - Medical Center</td><td>881-8965</td></tr>
-            <tr><th>Are you in good health?</th><th class="ans">Yes</th></tr>
-            <tr><th>Are you in under medical treatment now?</th><th class="ans">No</th><th>If so, what is the condition being treated?</th><th class="ans">N/A</th></tr>
-            <tr><th>Have you ever had serious illness or surgical operation?</th><th class="ans">No</th><th>If so, what illness or operation?</th><th class="ans">N/A</th></tr>
-            <tr><th>Have you ever been hospitalized</th><th class="ans">Yes</th><th>If so, when and why?</th><th colspan="3" class="ans">1994 - Dengue</th></tr>
-            <tr><th>Are you taking any prescription/non-prescription medication?</th><th class="ans">No</th><th>If so, please specify</th><th class="ans">N/A</th></tr>
-            <tr><th>Do you use tabacco products</th><th class="ans">No</th><th>Do you use alcohol, cocaine or other dangerous drugs?</th><th class="ans">No</th></tr>
-            <tr><th>Are you allergic to any of the following?</th><th class="ans">N/A</th></tr>
+            <tr><td colspan="4" id="office-address"></td><td id="office-number"></td></tr>
+            <tr><th>Are you in good health?</th><th class="ans" id="good-health"></th></tr>
+            <tr><th>Are you in under medical treatment now?</th><th class="ans" id="medical-treatment"></th><th>If so, what is the condition being treated?</th><th class="ans" id="medical-condition"></th></tr>
+            <tr><th>Have you ever had serious illness or surgical operation?</th><th class="ans" id="serious-illness"></th><th>If so, what illness or operation?</th><th class="ans" id="illness-operation"></th></tr>
+            <tr><th>Have you ever been hospitalized</th><th class="ans" id="hospitalized"></th><th>If so, when and why?</th><th colspan="3" class="ans" id="hospitalized-when"></th></tr>
+            <tr><th>Are you taking any prescription/non-prescription medication?</th><th class="ans" id="prescription"></th><th>If so, please specify</th><th class="ans" id="prescription-what"></th></tr>
+            <tr><th>Do you use tabacco products</th><th class="ans" id="tobacco"></th><th>Do you use alcohol, cocaine or other dangerous drugs?</th><th class="ans" id="alcohol-drugs"></th></tr>
+            <tr><th>Are you allergic to any of the following?</th><th class="ans" id="other-allergies"></th></tr>
             <tr><td><em>FOR WOMEN ONLY</em></td></tr>
-            <tr><th>Are you pregnant?</th><th class="ans">N/A</th><th>Are you nursing?</th><th class="ans">N/A</th></tr>
-            <tr><th>Are you taking birth control pills?</th><th class="ans">N/A</th></tr>
+            <tr><th>Are you pregnant?</th><th class="ans" id="pregnant"></th><th>Are you nursing?</th><th class="ans" id="nursing"></th></tr>
+            <tr><th>Are you taking birth control pills?</th><th class="ans" id="birth-control"></th></tr>
             <tr class="ui inverted table"><th>Blood Pressure</th><th colspan="5">Blood Type</th></tr>
-            <tr><td>180/60</td><td>O+</td></tr>
+            <tr><td id="blood-pressure"></td><td id="blood-type"></td></tr>
             <tr class="ui inverted table"><th colspan="6">Do you have or have you had any of the following?</th></tr>
-            <tr><td colspan="6">Stomach troubles/Ulcers</td></tr>
+            <tr><td colspan="6" id="other-diseases"></td></tr>
         </table>
         <div class="signature"><p>Signature</p></div>
         <div class="form-group">

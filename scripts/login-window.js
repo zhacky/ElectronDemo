@@ -30,10 +30,11 @@
         db.find({}, function(err, docs){
             admin = docs[0]['username'];
             console.log('admin: ' + admin);
-            encrypted_pw = docs[0]['password'];
-            var pwBytes = CryptoJS.AES.decrypt(encrypted_pw, 'DentalApp');
-            console.log('encrypted_pw: ' + encrypted_pw);
-            pw = pwBytes.toString(CryptoJS.enc.Utf8);
+            // encrypted_pw = docs[0]['password'];
+            // var pwBytes = CryptoJS.AES.decrypt(encrypted_pw, 'DentalApp');
+            // console.log('encrypted_pw: ' + encrypted_pw);
+            // pw = pwBytes.toString(CryptoJS.enc.Utf8);
+            pw = docs[0]['password'];
             console.log('pw: ' + pw);
             login(username,password,admin,pw);
         });

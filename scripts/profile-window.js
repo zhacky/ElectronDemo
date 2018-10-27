@@ -24,7 +24,7 @@
         var telephone = $('#telephone').val();
         var religion = $('#religion').val();
         var nationality = $('#nationality').val();
-        var email = $('email-address').val();
+        var email = $('#email-address').val();
         var address = $('#home-address').val();
         var occupation = $('#occupation').val();
         var dental_insurance = $('#dental-insurance').val();
@@ -33,7 +33,6 @@
         var guardian_occupation = $('#guardian-occupation').val();
         var referrer_name = $('#referrer-name').val();
         var consultation_reason = $('#consultation-reason').val();
-        var dental_history = $('#dental-history').val();
         var previous_dentist = $('#previous-dentist').val();
         var last_dentist_visit = $('#last-dental-visit').val();
         // --- medical history data ---
@@ -81,6 +80,7 @@
                 firstname: firstname,
                 middlename: middlename,
                 lastname: lastname,
+                nickname: nickname,
                 sex: sex,
                 age: age,
                 birthdate: birthdate,
@@ -96,7 +96,6 @@
                 'guardian-occupation': guardian_occupation,
                 'referrer-name': referrer_name,
                 'consultation-reason': consultation_reason,
-                'dental-history': dental_history,
                 'previous-dentist': previous_dentist,
                 'last-dentist-visit': last_dentist_visit,
                 physician: physician,
@@ -137,6 +136,7 @@
                 firstname: firstname,
                 middlename: middlename,
                 lastname: lastname,
+                nickname: nickname,
                 sex: sex,
                 age: age,
                 birthdate: birthdate,
@@ -152,7 +152,6 @@
                 'guardian-occupation': guardian_occupation,
                 'referrer-name': referrer_name,
                 'consultation-reason': consultation_reason,
-                'dental-history': dental_history,
                 'previous-dentist': previous_dentist,
                 'last-dentist-visit': last_dentist_visit,
                 physician: physician,
@@ -219,13 +218,14 @@ function loadProfile(){
     $('#firstname').val(profile['firstname']);
     $('#middlename').val(profile['middlename']);
     $('#lastname').val(profile['lastname']);
+    $('#nickname').val(profile['nickname']);
     $('#' + profile['sex']).prop('checked', 'checked').trigger('change'); // radios
     $('#age').val(profile['age']);
     $('#birthdate').val(profile['birthdate']);
     $('#telephone').val(profile['telephone']);
     $('#religion').val(profile['religion']);
     $('#nationality').val(profile['nationality']);
-    $('#email').val(profile['email']);
+    $('#email-address').val(profile['email']);
     $('#home-address').val(profile['address']);
     $('#occupation').val(profile['occupation']);
     $('#dental-insurance').val(profile['dental-insurance']);
@@ -236,7 +236,7 @@ function loadProfile(){
     $('#consultation-reason').val(profile['consultation-reason']);
     $('#dental-history').val(profile['dental-history']);
     $('#previous-dentist').val(profile['previous-dentist']);
-    $('#last-dentist-visit').val(profile['last-dentist-visit']); // date
+    $('#last-dental-visit').val(profile['last-dentist-visit']); // date
     $('#physician').val(profile['physician']);
     $('#specialty').val(profile['specialty']);
     $('#office-address').val(profile['office-address']);
@@ -278,7 +278,7 @@ $('.close-button').on( 'click', () => {
 });
 // -- preview button --
 $('.print-preview').on( 'click', () => {
-        ipcRenderer.send('profile:preview', null);
+        ipcRenderer.send('profile:preview', profile);
 });
 // -- print button --
 
