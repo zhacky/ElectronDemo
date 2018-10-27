@@ -17,14 +17,14 @@
             <form>
                 <!-- tab navigations -->
                 <ul class="nav nav-tabs" id="profileTab" role="tablist">
-                    <li class="nav-item"><a href="#bio-data" id="#bio-data-tab" class="nav-link" data-toggle="tab" role="tab">Bio Data</a></li>
+                    <li class="nav-item"><a href="#bio-data" id="#bio-data-tab" class="nav-link active" data-toggle="tab" role="tab">Bio Data</a></li>
                     <li class="nav-item"><a href="#dental-history" id="#dental-history-tab" class="nav-link" data-toggle="tab" role="tab">Dental History</a></li>
                     <li class="nav-item"><a href="#medical-history" id="#medical-history-tab" class="nav-link" data-toggle="tab" role="tab">Medical History</a></li>
-                    <li class="nav-item"><a href="#dental-chart" id="#dental-chart-tab" class="nav-link active" data-toggle="tab" role="tab">Dental Chart</a></li>
+                    <li class="nav-item"><a href="#dental-chart" id="#dental-chart-tab" class="nav-link" data-toggle="tab" role="tab">Dental Chart</a></li>
                 </ul>
                 <!-- tab contents -->
                 <div class="tab-content" id="profileTabContent">
-                    <div class="tab-pane fade" id="bio-data" role="tab-panel">
+                    <div class="tab-pane fade  show active" id="bio-data" role="tab-panel">
                         <div class="bio-data p-5">
                             <div class="row">  <!-- NAME -->
                             <div class="form-group col">
@@ -38,6 +38,13 @@
                             </div>
                         </div>
                         <div class="row"> <!-- SEX & AGE -->
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="nickname">Nickname</label>
+                                <input type="text" class="form-control" id="nickname">
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
                         <div class="col-md-2">
                             <label for="sex">Sex</label>
                             <div class="form-check">
@@ -55,6 +62,17 @@
                                 <input type="number" class="form-control" name="age" id="age" required>
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <label for="birthdate">Date Of Birth</label>
+                            <div class="form-group"><input type="date" class="form-control" id="birthdate"></div>
+                        </div>
+                    </div>
+                    <!-- RELIGION / NATIONALITY  -->
+                    <div class="row">
+                        <div class="col-md-3"><label for="telephone">Cel. No. / Tel. No.</label><input type="tel" class="form-control" id="telephone" required></div>
+                        <div class="col-md-3"><label for="religion">Religion</label><input type="text" class="form-control" id="religion"></div>
+                        <div class="col-md-3"><label for="nationality">Nationality</label><input type="text" class="form-control" id="nationality"></div>
+                        <div class="col-md-3"><label for="email-address">Email</label><input type="email" class="form-control" id="email-address"></div>
                     </div>
                     <div class="row">   <!-- ADDRESS -->
                     <div class="col-md-6">
@@ -101,6 +119,8 @@
                 <textarea id="consultation-reason" class="form-control"></textarea>
             </div>
         </div>
+        <script>
+        </script>
         <hr>
     </div>
     </div> <!-- end bio data -->
@@ -461,12 +481,12 @@
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="other-diseases"><label for="other-diseases" class="form-check-label">Other</label>
                         </div>
-                        <input type="text" class="other-disease">
+                        <input type="text" class="other-disease" id="other-disease">
                     </div>
                 </div>
             </div>
             </div><!-- end medical-history -->
-            <div class="tab-pane fade show active" id="dental-chart" role="tab-panel">
+            <div class="tab-pane fade" id="dental-chart" role="tab-panel">
                 <div class="dental-chart-body">
                     <div class="teeth-container">
                         <div class="chart">

@@ -75,6 +75,9 @@ jQuery(function(){
 $(document).ready(() => {
     $(".top-container").prepend("<span class='details'>&nbsp;</span>");
     $(".bottom-container").append("<span  class='details'>&nbsp;</span>");
+    if(mkData != undefined) {
+        data = mkData;
+    }
     loadDentalData();
  });
 

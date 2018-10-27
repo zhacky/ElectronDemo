@@ -1,6 +1,6 @@
-        var profile;
-        const electron = require('electron');
-        const { ipcRenderer } = electron;
+var profile;
+const electron = require('electron');
+const { ipcRenderer } = electron;
 
 
 
