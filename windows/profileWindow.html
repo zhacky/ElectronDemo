@@ -17,14 +17,15 @@
             <form>
                 <!-- tab navigations -->
                 <ul class="nav nav-tabs" id="profileTab" role="tablist">
-                    <li class="nav-item"><a href="#bio-data" id="#bio-data-tab" class="nav-link active" data-toggle="tab" role="tab">Bio Data</a></li>
+                    <li class="nav-item"><a href="#bio-data" id="#bio-data-tab" class="nav-link" data-toggle="tab" role="tab">Bio Data</a></li>
                     <li class="nav-item"><a href="#dental-history" id="#dental-history-tab" class="nav-link" data-toggle="tab" role="tab">Dental History</a></li>
                     <li class="nav-item"><a href="#medical-history" id="#medical-history-tab" class="nav-link" data-toggle="tab" role="tab">Medical History</a></li>
                     <li class="nav-item"><a href="#dental-chart" id="#dental-chart-tab" class="nav-link" data-toggle="tab" role="tab">Dental Chart</a></li>
+                    <li class="nav-item"><a href="#treatment-record" id="#treatment-record-tab" class="nav-link active" data-toggle="tab" role="tab">Treatment Record</a></li>
                 </ul>
                 <!-- tab contents -->
                 <div class="tab-content" id="profileTabContent">
-                    <div class="tab-pane fade  show active" id="bio-data" role="tab-panel">
+                    <div class="tab-pane fade" id="bio-data" role="tab-panel">
                         <div class="bio-data p-5">
                             <div class="row">  <!-- NAME -->
                             <div class="form-group col">
@@ -987,26 +988,87 @@
                 </div>
             </div>
             </div><!-- end dental-chart -->
-            </div> <!-- end tab contents -->
-            &nbsp;<em><span class="notification">&nbsp;</span></em><br>
-            <button type="submit" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-outline-primary close-button">Close</button>
-            <button type="button" class="btn btn-outline-success print-preview">Preview</button>
-        </form>
-    </div>
-    <!-- allow jquery -->
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-    <!-- normal scripts -->
-    <!-- <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script> -->
-    <script type="text/javascript" src="../scripts/jquery/external/jquery/jquery.js"></script>
-    <script type="text/javascript" src="../scripts/jquery/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../scripts/libs/html2canvas.min.js"></script>
-    <script type="text/javascript" src="../scripts/libs/FileSaver.min.js"></script>
-    <!-- detect jquery -->
-    <script>if (window.module) module = window.module;</script>
-    <!-- custom scripts -->
-    <script type="text/javascript" src="../scripts/profile-window.js"></script>
-    <script type="text/javascript" src="../scripts/dentalchart.js"></script>
-</body>
+            <div class="tab-pane fade show active" id="treatment-record" role="tab-panel">
+                <div class="input-area mt-4">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="procedure">Procedure</label>
+                            <input type="text" class="form-control" id="procedure">
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <label for="charged">Amount Charged</label>
+                            <input type="number" class="form-control" id="charged">
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <label for="paid">Amount Paid</label>
+                            <input type="number" class="form-control" id="paid">
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <label for="balance">Balance</label>
+                            <input type="number" class="form-control" id="balance" readonly="true">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 form-group">
+                            <label for="treatment-date">Date</label>
+                            <input class="form-control" type="date" id="treatment-date">
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="tooth-nos">Tooth Numbers</label>
+                            <textarea type="text" class="form-control" id="tooth-nos"></textarea>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="dentists">Dentist/s</label>
+                            <textarea type="text" class="form-control" id="dentists"></textarea>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="next-appt">Next Appointment</label>
+                            <input class="form-control" type="date" id="next-appt">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <button class="btn btn-outline-success" >Add</button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <br>
+                <table class="table table-bordered">
+                    <tr><th>Date</th><th>Tooth Nos.</th><th>Procedure</th><th>Dentist/s</th><th>Charged</th><th>Paid</th><th>Balance</th><th>Next Appt.</th></tr>
+                    <tr><td class="treatment-date"></td><td class="tooth-nos"></td><td class="procedure"></td><td class="dentists"></td><td class="charged"></td><td class="paid"></td class="balance"><td></td><td class="next-appt"></td></tr>
+                    <tr><td class="treatment-date"></td><td class="tooth-nos"></td><td class="procedure"></td><td class="dentists"></td><td class="charged"></td><td class="paid"></td class="balance"><td></td><td class="next-appt"></td></tr>
+                    <tr><td class="treatment-date"></td><td class="tooth-nos"></td><td class="procedure"></td><td class="dentists"></td><td class="charged"></td><td class="paid"></td class="balance"><td></td><td class="next-appt"></td></tr>
+                    <tr><td class="treatment-date"></td><td class="tooth-nos"></td><td class="procedure"></td><td class="dentists"></td><td class="charged"></td><td class="paid"></td class="balance"><td></td><td class="next-appt"></td></tr>
+                    <tr><td class="treatment-date"></td><td class="tooth-nos"></td><td class="procedure"></td><td class="dentists"></td><td class="charged"></td><td class="paid"></td class="balance"><td></td><td class="next-appt"></td></tr>
+                    <tr><td class="treatment-date"></td><td class="tooth-nos"></td><td class="procedure"></td><td class="dentists"></td><td class="charged"></td><td class="paid"></td class="balance"><td></td><td class="next-appt"></td></tr>
+                </table>
+                </div> <!-- end treatment-record -->
+                </div> <!-- end tab contents -->
+                &nbsp;<em><span class="notification">&nbsp;</span></em><br>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-outline-primary close-button">Close</button>
+                <button type="button" class="btn btn-outline-success print-preview">Preview</button>
+            </form>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <!-- allow jquery -->
+        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+        <!-- normal scripts -->
+        <!-- <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script> -->
+        <script type="text/javascript" src="../scripts/jquery/external/jquery/jquery.js"></script>
+        <script type="text/javascript" src="../scripts/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../scripts/libs/html2canvas.min.js"></script>
+        <script type="text/javascript" src="../scripts/libs/FileSaver.min.js"></script>
+        <!-- detect jquery -->
+        <script>if (window.module) module = window.module;</script>
+        <!-- custom scripts -->
+        <script type="text/javascript" src="../scripts/profile-window.js"></script>
+        <script type="text/javascript" src="../scripts/dentalchart.js"></script>
+    </body>
 </html>

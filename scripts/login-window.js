@@ -1,14 +1,17 @@
-    const electron = require('electron');
-    const { ipcRenderer } = electron;
-    const form = document.querySelector('form');
+const environment = 'production';
+const electron = require('electron');
+const { ipcRenderer } = electron;
+const form = document.querySelector('form');
+const path = require('path');
+// Database
+var Datastore = require('nedb');
+var dbpath;
 
-    const path = require('path');
-    const inc = path.join(__dirname, '../scripts/inc.dat');
-    //Synchronous read
-
-    // Database
-    var Datastore = require('nedb');
-    var dbpath = path.join(__dirname,'../scripts/user_db');
+if(environment == 'production') {
+        dbpath = path.join(__dirname,'../../../db/user.db');
+    } else {
+        dbpath = path.join(__dirname,'../scripts/user_db');
+    }
     var db = new Datastore({filename: dbpath, autoload:true });
 
     var item = ' loginWindow';
@@ -50,6 +53,11 @@ function login(uname, pword ,dbadmin, dbpassword) {
             $('span.validation').html('Username or Password is incorrect.');
         }
 }
+// double click toggle fullscreen
+$(document).on('dblclick','body',(e) => {
+    console.log('double clicked!');
+    ipcRenderer.send('general:double-click',null);
+ });
 
 
     $(document).ready(() => {

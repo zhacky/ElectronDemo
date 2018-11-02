@@ -1,14 +1,12 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
-
 const fs = require('fs');
 const os = require('os');
 
 const {app, BrowserWindow, ipcMain, shell, dialog } = electron;
 // SET ENV
 process.env.NODE_ENV = 'production';
-
 let mainWindow;
 let loginWindow;
 let profileWindow;
@@ -17,27 +15,40 @@ let previewWindow;
 
 // Listen for app to be ready
 app.on('ready', () => {
-   createMainWindow();
-   // createLoginWindow();
+   // createMainWindow();
+   createLoginWindow();
 });
+app.on('Window-all-closed',() => {
+        app.quit();
+ });
 /*----------------------------------------*
  *              MAIN WINDOW               *
  *----------------------------------------*/
 function createMainWindow(){
-    mainWindow = new BrowserWindow({width: 1280, height: 1024, icon: path.join(__dirname,'../images/teeth-icon.png')});
+    mainWindow = new BrowserWindow({width: 1280, height: 1024, fullscreen: true, icon: path.join(__dirname,'../images/teeth-icon.png')});
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, '../windows/mainWindow.html'),
         protocol: 'file:',
         slashes: true
     }));
     mainWindow.setMenuBarVisibility(false);
-    mainWindow.on('close',() => { mainWindow = null; });
+    mainWindow.on('close',() => {
+        mainWindow = null;
+        // let mainWindow;
+        // let loginWindow;
+        // let profileWindow;
+        // let settingsWindow;
+        // let previewWindow;
+        if(mainWindow == null && loginWindow == null && profileWindow == null && settingsWindow == null && previewWindow == null ){
+            app.quit();
+        }
+    });
 }
 /*----------------------------------------*
  *              LOGIN WINDOW              *
  *----------------------------------------*/
 function createLoginWindow(){
-    loginWindow = new BrowserWindow({});
+    loginWindow = new BrowserWindow({fullscreen: true, icon: path.join(__dirname,'../images/teeth-icon.png')});
     loginWindow.loadURL(url.format({
         pathname: path.join(__dirname, '../windows/loginWindow.html'),
         protocol: 'file:',
@@ -50,7 +61,7 @@ function createLoginWindow(){
  *              PROFILE WINDOW            *
  *----------------------------------------*/
 function createProfileWindow() {
-    profileWindow = new BrowserWindow({width: 1280, height: 1024, icon: path.join(__dirname,'../images/teeth-icon.png')});
+    profileWindow = new BrowserWindow({width: 1280, height: 1024, fullscreen: true, icon: path.join(__dirname,'../images/teeth-icon.png')});
     profileWindow.loadURL(url.format({
         pathname: path.join(__dirname, '../windows/profileWindow.html'),
         protocol: 'file:',
@@ -90,11 +101,13 @@ function createProfileWindow() {
 /*----------------------------------------*
  *              IPC ACIVITIES             *
  *----------------------------------------*/
+ /*----------  ON LOGIN --------------*/
 ipcMain.on('login:submit', ( e, item ) => {
         createMainWindow();
      loginWindow.close();
 });
 
+/*----------  ON PROFILE --------------*/
 ipcMain.on('profile:create', (e, item) => {
         createProfileWindow();
         mainWindow.close();
@@ -137,7 +150,7 @@ ipcMain.on('profile:print',(e,item) => {
      });
     // profileWindow.print();
  });
-// settings
+/*----------  ON SETTINGS --------------*/
 ipcMain.on('settings:open', (e,item) => {
         createSettingsWindow();
         mainWindow.close();
@@ -148,6 +161,19 @@ ipcMain.on('settings:close',(e,item) => {
 // console log
 ipcMain.on('console:log', (e,item) => {
     console.log('Log: ' + e);
+ });
+/*----------  ON MAIN --------------*/
+var fullscreen = true;
+ipcMain.on('main:double-click',(e,item) => {
+    fullscreen = !fullscreen;
+    console.log('error:' + e + ' / fullscreen: ' + fullscreen);
+    mainWindow.setFullScreen(fullscreen);
+});
+ipcMain.on('general:double-click',(e,item) => {
+    fullscreen = !fullscreen;
+    var win = BrowserWindow.fromWebContents(e.sender);
+    console.log('win:' + win + ' / fullscreen: ' + fullscreen);
+    win.setFullScreen(fullscreen);
  });
 // confirm delete
 ipcMain.on('main:confirm-delete', (e,item) => {

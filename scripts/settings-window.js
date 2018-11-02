@@ -1,9 +1,16 @@
+const environment = 'production';
 const electron = require('electron');
 const { ipcRenderer } = electron;
 // load database
 var Datastore = require('nedb');
 var path = require('path');
-var dbpath = path.join(__dirname,'../scripts/user_db');
+var dbpath;
+
+if(environment == 'production') {
+    dbpath = path.join(__dirname,'../../../db/user.db');
+} else {
+    dbpath = path.join(__dirname,'../scripts/user_db');
+}
 var db = new Datastore({filename: dbpath, autoload: true });
 // add form listener
 var form = document.querySelector('form');

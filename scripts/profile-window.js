@@ -1,11 +1,16 @@
-    var profile;
-    var isNew = false;
-    var mkData;
-    const electron = require('electron');
-    const { ipcRenderer } = electron;
-    const Datastore = require('nedb');
-    const path = require('path');
-    const dbpath = path.join(__dirname,'../scripts/profiles_db');
+const environment = 'production';
+var profile;
+var isNew = false;
+const electron = require('electron');
+const { ipcRenderer } = electron;
+const Datastore = require('nedb');
+const path = require('path');
+var dbpath;
+if(environment == 'production') {
+        dbpath = path.join(__dirname,'../../../db/profiles.db');
+    } else {
+        dbpath = path.join(__dirname,'../scripts/profiles_db');
+    }
     var db = new Datastore({ filename: dbpath, autoload: true });
 
     const form = document.querySelector('form');
@@ -197,8 +202,12 @@ ipcRenderer.on('profile-selected', (e,item) => {
     getProfile(item);
 
 });
-/*----------  ON wrote-pdf --------------*/
-
+/*----------  ON double click --------------*/
+// double click toggle fullscreen
+$(document).on('dblclick','body',(e) => {
+    console.log('double clicked!');
+    ipcRenderer.send('general:double-click',null);
+ });
 
 // -- get profile using key --
 function getProfile( key ) {

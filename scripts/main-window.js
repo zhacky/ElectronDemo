@@ -1,9 +1,16 @@
+const environment = 'production';
 const electron = require('electron');
 const { ipcRenderer } = electron;
 // load database
 var Datastore = require('nedb');
 var path = require('path');
-var dbpath = path.join(__dirname,'../scripts/profiles_db');
+var dbpath;
+
+if(environment == 'production') {
+    dbpath = path.join(__dirname,'../../../db/profiles.db');
+} else {
+    dbpath = path.join(__dirname,'../scripts/profiles_db');
+}
 var db = new Datastore({filename: dbpath, autoload: true });
 
 var profiles = [];
@@ -62,22 +69,30 @@ function loadRows(){
         var id = $(this).attr('id');
         editRow(id);
     });
-    // create click event for delete row
+// create click event for delete row
     $('.delete-button').on('click', function() {
         var id = $(this).attr('id');
     ipcRenderer.send('main:confirm-delete', id);
     });
 }
+// double click toggle fullscreen
+$(document).on('dblclick','body',(e) => {
+    console.log('double clicked!');
+    ipcRenderer.send('general:double-click',null);
+ });
+
 // delete confirmation
 ipcRenderer.on('main:confirmed-delete', (e, item) => {
 var id = item;
 deleteRow(id);
  });
+
 // initial load
 $(document).ready(() => {
     $('input[name=search]').focus();
     loadProfiles('');
 });
+
 // search function
 $('input[name=search]').on('change', function(){
     var arg = $(this).val();
