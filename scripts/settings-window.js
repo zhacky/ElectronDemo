@@ -1,12 +1,14 @@
-const environment = 'production';
+const isProduction = require('electron-is-running-in-asar');
+
 const electron = require('electron');
 const { ipcRenderer } = electron;
+const fs = require('fs');
 // load database
 var Datastore = require('nedb');
 var path = require('path');
 var dbpath;
 
-if(environment == 'production') {
+if(isProduction()) {
     dbpath = path.join(__dirname,'../../../db/user.db');
 } else {
     dbpath = path.join(__dirname,'../scripts/user_db');
@@ -16,11 +18,8 @@ var db = new Datastore({filename: dbpath, autoload: true });
 var form = document.querySelector('form');
 form.addEventListener('submit', submitForm );
 let adminuser;
-// let oldpw;
-let encrypted_pw;
-let pwBytes;
+let oldpw;
 let userdata;
-const key = 'zOrqYsyunulq64Md';
 
 
 function loadSettings(){
@@ -34,6 +33,9 @@ function loadSettings(){
         // oldpw = pwBytes.toString(CryptoJS.enc.Utf8);
         $('#username').val(adminuser);
     });
+    // load profile db path
+var profilepath = fs.readFileSync(path.join(__dirname,'../../inc.dat'),'utf8');
+$("#database-path").val(profilepath);
 }
 
 $(document).ready(() => {
@@ -92,3 +94,40 @@ function submitForm(e){
  $('.close-button').on( 'click', () => {
         ipcRenderer.send('settings:close', null);
 });
+
+ $('#browse-for-db').on('click',() => {
+    var current_path = $("#database-path").val();
+
+    ipcRenderer.send('settings:browse', current_path);
+  });
+
+
+/*----------------------------------------*
+ *              ipc main                  *
+ *----------------------------------------*/
+ipcRenderer.on('settings:selected-database', (e,item) => {
+var selected_db = item;
+$("#database-path").val(selected_db);
+ });
+/*----------------------------------------*
+ *             update database            *
+ *----------------------------------------*/
+$('#save-db-path').on('click',() => {
+    var current_path = $("#database-path").val();
+    var file = current_path;
+    fs.access(file, fs.constants.R_OK, (err) => {
+        console.log(`${file} ${err ? 'is not readable' : 'is readable'}`);
+     if(err) {
+        $('#db-error').css('visibility', 'visible');
+        throw err;
+    }
+     fs.writeFile(path.join(__dirname,'../../inc.dat'),file,'utf8',(err) => {
+        if(err) {
+                console.log('error saving file: ' + err);
+                $('#db-error').css('visibility', 'visible');
+                throw err;
+            }
+        $('#db-error').css('visibility', 'hidden');
+      });
+    });
+ });

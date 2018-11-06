@@ -7,16 +7,18 @@ const os = require('os');
 const {app, BrowserWindow, ipcMain, shell, dialog } = electron;
 // SET ENV
 process.env.NODE_ENV = 'production';
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
 let mainWindow;
 let loginWindow;
 let profileWindow;
 let settingsWindow;
 let previewWindow;
+var fullscreen = false;
 
 // Listen for app to be ready
 app.on('ready', () => {
-   // createMainWindow();
-   createLoginWindow();
+   createMainWindow();
+   // createLoginWindow();
 });
 app.on('Window-all-closed',() => {
         app.quit();
@@ -25,7 +27,7 @@ app.on('Window-all-closed',() => {
  *              MAIN WINDOW               *
  *----------------------------------------*/
 function createMainWindow(){
-    mainWindow = new BrowserWindow({width: 1280, height: 1024, fullscreen: true, icon: path.join(__dirname,'../images/teeth-icon.png')});
+    mainWindow = new BrowserWindow({width: 1280, height: 1024, fullscreen: fullscreen, icon: path.join(__dirname,'../images/teeth-icon.png')});
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, '../windows/mainWindow.html'),
         protocol: 'file:',
@@ -48,7 +50,7 @@ function createMainWindow(){
  *              LOGIN WINDOW              *
  *----------------------------------------*/
 function createLoginWindow(){
-    loginWindow = new BrowserWindow({fullscreen: true, icon: path.join(__dirname,'../images/teeth-icon.png')});
+    loginWindow = new BrowserWindow({fullscreen: fullscreen, icon: path.join(__dirname,'../images/teeth-icon.png')});
     loginWindow.loadURL(url.format({
         pathname: path.join(__dirname, '../windows/loginWindow.html'),
         protocol: 'file:',
@@ -61,7 +63,7 @@ function createLoginWindow(){
  *              PROFILE WINDOW            *
  *----------------------------------------*/
 function createProfileWindow() {
-    profileWindow = new BrowserWindow({width: 1280, height: 1024, fullscreen: true, icon: path.join(__dirname,'../images/teeth-icon.png')});
+    profileWindow = new BrowserWindow({width: 1280, height: 1024, fullscreen: fullscreen, icon: path.join(__dirname,'../images/teeth-icon.png')});
     profileWindow.loadURL(url.format({
         pathname: path.join(__dirname, '../windows/profileWindow.html'),
         protocol: 'file:',
@@ -163,7 +165,7 @@ ipcMain.on('console:log', (e,item) => {
     console.log('Log: ' + e);
  });
 /*----------  ON MAIN --------------*/
-var fullscreen = true;
+
 ipcMain.on('main:double-click',(e,item) => {
     fullscreen = !fullscreen;
     console.log('error:' + e + ' / fullscreen: ' + fullscreen);
@@ -186,6 +188,16 @@ ipcMain.on('main:confirm-delete', (e,item) => {
             e.sender.send('main:confirmed-delete', item);
         }
  });
+
+ipcMain.on('settings:browse', (e,item) => {
+var result = dialog.showOpenDialog({browserWindow: settingsWindow, filters: [{name: 'NE Database File',extensions: ['db'] }] });
+    if(result) {
+        var file = result[0];
+        fs.access(file, fs.constants.R_OK, (err) => {  console.log(`${file} ${err ? 'is not readable' : 'is readable'}`); });
+        e.sender.send('settings:selected-database', file);
+    }
+});
+
 
 
 

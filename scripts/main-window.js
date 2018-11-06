@@ -1,18 +1,17 @@
-const environment = 'production';
 const electron = require('electron');
+const isProduction = require('electron-is-running-in-asar');
+console.log(isProduction());
 const { ipcRenderer } = electron;
 // load database
 var Datastore = require('nedb');
 var path = require('path');
+var db;
+// get dbpath from inc.dat file (should be configurable)
+const fs = require('fs');
 var dbpath;
-
-if(environment == 'production') {
-    dbpath = path.join(__dirname,'../../../db/profiles.db');
-} else {
-    dbpath = path.join(__dirname,'../scripts/profiles_db');
-}
-var db = new Datastore({filename: dbpath, autoload: true });
-
+dbpath = fs.readFileSync(path.join(__dirname,'../../inc.dat'),'utf8');
+db = new Datastore({filename: dbpath, autoload: true });
+// profiles array
 var profiles = [];
 var selected;
 // load list to table

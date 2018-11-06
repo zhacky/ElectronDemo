@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Dashboard</title>
-<link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="./../assets/font/css/open-iconic-bootstrap.min.css">
-<link rel="stylesheet" href="../styles/main.css">
-</head>
-<body>
-    <div class="container pt-5">
-
+    <head>
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./../assets/font/css/open-iconic-bootstrap.min.css">
+        <link rel="stylesheet" href="../styles/main.css">
+    </head>
+    <body>
+        <div class="container pt-5">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <select class="custom-select" name="search-select" id="search-select">
@@ -21,44 +20,39 @@
                     </select>
                 </div>
                 <input type="search" name="search" class="form-control search" placeholder="Search...">
-
                 <div class="options ml-2 m-1">
                     <button class="btn btn-outline-info  btn-sm" id="new-profile" type="button">Create New Profile</button>
                     <button class="btn btn-outline-warning btn-sm" id="settings" type="button">Settings</button>
                 </div>
             </div>
-
-
-        <hr>
-
-        <div class="profile-list">
-            <table class="table table-hover table-sm">
-                <thead class="thead-dark">
-                    <tr>
-                        <th><a href="">Last&nbsp;Name</a></th>
-                        <th><a href="">First&nbsp;Name</a></th>
-                        <th><a href="">Middle&nbsp;Name</a></th>
-                        <th><a href="">Sex</a></th>
-                        <th><a href="">Age</a></th>
-                        <th><a href="">Address</a></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <hr>
+            <div class="profile-list">
+                <table class="table table-hover table-sm">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th><a href="">Last&nbsp;Name</a></th>
+                            <th><a href="">First&nbsp;Name</a></th>
+                            <th><a href="">Middle&nbsp;Name</a></th>
+                            <th><a href="">Sex</a></th>
+                            <th><a href="">Age</a></th>
+                            <th><a href="">Address</a></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-
-<!-- allow jquery -->
-<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-<!-- normal scripts -->
-<script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- detect jquery -->
-<script>if (window.module) module = window.module;</script>
-<!-- custom scripts -->
-<script type="text/javascript" src="../scripts/main-window.js"></script>
-</body>
+        <!-- allow jquery -->
+        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+        <!-- normal scripts -->
+        <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- detect jquery -->
+        <script>if (window.module) module = window.module;</script>
+        <!-- custom scripts -->
+        <script type="text/javascript" src="../scripts/main-window.js"></script>
+    </body>
 </html>

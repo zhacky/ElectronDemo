@@ -75,9 +75,9 @@ jQuery(function(){
 $(document).ready(() => {
     $(".top-container").prepend("<span class='details'>&nbsp;</span>");
     $(".bottom-container").append("<span  class='details'>&nbsp;</span>");
-    if(mkData != undefined) {
-        data = mkData;
-    }
+    // if(mkData) {
+    //     data = mkData;
+    // }
     loadDentalData();
  });
 
@@ -107,6 +107,16 @@ function loadDentalData(){
         $("#tooth-" + number + " .tooth .center").addClass('mk-' + details['center']);
         $("#tooth-" + number + " .tooth .right").addClass('mk-' + details['right']);
         $("#tooth-" + number + " .tooth .bottom").addClass('mk-' + details['bottom']);
+        // add details text
+        var tooth_details = $('#tooth-' + number + ' .details').text();
+        tooth_details += details['top'] + ' ' +
+                            details['left'] + ' ' +
+                            details['center'] + ' ' +
+                            details['right'] + ' ' +
+                            details['bottom'];
+
+
+        $('#tooth-' + number + ' .details').text(tooth_details);
 }
     }
 
@@ -114,11 +124,11 @@ function loadDentalData(){
 function addDetails( el ) {
     var details = mk.substr(3);
     var number = el.parent().parent().attr('id').substr(6);
-    var info = el.parent().parent().children(".details").text();
+    var info = el.parent().parent().children('.details').text();
     if ( info.indexOf(details)> -1 ) {
-
+        // nothing to do if already in text
     } else {
-        info += "\n" + details;
+        info += '\n' + details;
     }
     el.parent().parent().children(".details").text(info);
     console.log('details: ' + details + ' / number: ' + number);

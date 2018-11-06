@@ -5,3 +5,7 @@
 .notification {
     color: #ff2b1a;
 }
+
+#database-path {
+    direction: rtl;
+}

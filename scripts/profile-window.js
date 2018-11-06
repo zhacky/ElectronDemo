@@ -1,16 +1,18 @@
-const environment = 'production';
-var profile;
-var isNew = false;
+const isProduction = require('electron-is-running-in-asar');
+const uuidv1 = require('uuid/v1');
 const electron = require('electron');
 const { ipcRenderer } = electron;
 const Datastore = require('nedb');
 const path = require('path');
+var profile;
+var isNew = false;
 var dbpath;
-if(environment == 'production') {
+if(isProduction()) {
         dbpath = path.join(__dirname,'../../../db/profiles.db');
     } else {
         dbpath = path.join(__dirname,'../scripts/profiles_db');
     }
+// db
     var db = new Datastore({ filename: dbpath, autoload: true });
 
     const form = document.querySelector('form');
@@ -59,7 +61,7 @@ if(environment == 'production') {
         var other_allergies = [];
         $('.allergies-query input:checked').each(function(){
             other_allergies.push($(this).attr('id'));
-        })
+        });
 
         var other_allergy = $('#other-allergies').val();
 
@@ -74,9 +76,57 @@ if(environment == 'production') {
                 other_diseases.push($(this).attr('id'));
             });
         var other_disease = $('#other-disease').val();
+        //-- extras
+        var periodontal_screening = [];
+        $('input[name=periodontal-screening]:checked').each(
+                function(){
+                    periodontal_screening.push($(this).attr('id'));
+                }
+            );
+        var occlusion = [];
+        $('input[name=occlusion]:checked').each(
+                function(){
+                    occlusion.push($(this).attr('id'));
+                }
+            );
+        var appliances = [];
+        $('input[name=appliances]:checked').each(
+                function(){
+                    appliances.push($(this).attr('id'));
+                }
+            );
+        var xray_taken = [];
+        $('input[name=xray-taken]:checked').each(
+                function(){
+                    xray_taken.push($(this).attr('id'));
+                }
+            );
+        var tmd = [];
+        $('input[name=tmd]:checked').each(
+                function(){
+                    tmd.push($(this).attr('id'));
+                }
+            );
         // -- dental chart data --
             mkData = data || [];
+        // -- visits --
+        var visits = [];
 
+        $('#visits-table tr.visits-row').each(
+                function(){
+                    var visit = {};
+                    visit.id = $(this).attr('id');
+                    visit.treatment_date = $(this).find('.treatment-date').text();
+                    visit.tooth_nos = $(this).find('.tooth-nos').text();
+                    visit.procedure = $(this).find('.procedure').text();
+                    visit.dentists = $(this).find('.dentists').text();
+                    visit.charged = $(this).find('.charged').text();
+                    visit.paid = $(this).find('.paid').text();
+                    visit.balance = $(this).find('.balance').text();
+                    visit.next_appt = $(this).find('.next-appt').text();
+                    visits.push(visit);
+                }
+            );
 
         // insert into database
         if (profile == null ) {
@@ -128,6 +178,12 @@ if(environment == 'production') {
                 'other-diseases': other_diseases,
                 'other-disease': other_disease,
                 chart: data,
+                'periodontal-screening': periodontal_screening,
+                occlusion: occlusion,
+                appliances: appliances,
+                'xray-taken': xray_taken,
+                tmd: tmd,
+                visits: visits
             };
             db.insert(profile, function(err, doc) {
                 console.log('error from insert to profiles.db: ' + err);
@@ -184,10 +240,17 @@ if(environment == 'production') {
                 'other-diseases': other_diseases,
                 'other-disease': other_disease,
                 chart: data,
+                'periodontal-screening': periodontal_screening,
+                occlusion: occlusion,
+                appliances: appliances,
+                'xray-taken': xray_taken,
+                tmd: tmd,
+                visits: visits
             };
             db.update({_id: key}, profile, {upsert: true}, function(err, doc){
-                console.log('error updating profile: ' + err + 'key: ' + key);
-                if(err == null) {
+                if(err) {
+                                console.log('error updating profile: ' + err + 'key: ' + key);
+                }else {
                     $('.notification').text('Saved.');
                 }
             });
@@ -261,9 +324,11 @@ function loadProfile(){
     $('#prescription-what').val(profile['prescription-what']);
     $('#tobacco-' + profile['tobacco']).prop('checked','checked').trigger('change'); // radios
     $('#alcohol-drugs-' + profile['alcohol-drugs']).prop('checked','checked').trigger('change'); // radios
-    for (var i = profile['other-allergies'].length - 1; i >= 0; i--) {
-        var oa = profile['other-allergies'][i];
-        $('#' + oa).prop('checked', 'checked').trigger('change');
+    if(profile['other-allergies']){
+        for (var i = profile['other-allergies'].length - 1; i >= 0; i--) {
+            var oa = profile['other-allergies'][i];
+            $('#' + oa).prop('checked', 'checked').trigger('change');
+        }
     }
 
     $('#other-allergy').val(profile['other-allergy']);
@@ -272,15 +337,139 @@ function loadProfile(){
     $('#birth-control-' + profile['birth-control']).prop('checked','checked').trigger('change'); // radios
     $('#bloodpressure').val(profile['blood-pressure']);
     $('#bloodtype').val(profile['blood-type']);
-    for (var i = profile['other-diseases'].length - 1; i >= 0; i--) {
-        var od = profile['other-diseases'][i];
-        $('#' + od).prop('checked','checked').trigger('change');
+    if(profile['other-diseases']){
+        for (var i = profile['other-diseases'].length - 1; i >= 0; i--) {
+            var od = profile['other-diseases'][i];
+            $('#' + od).prop('checked','checked').trigger('change');
+        }
+    }
+    // extras
+    if(profile['periodontal-screening']){
+        for (var i = profile['periodontal-screening'].length - 1; i >= 0; i--) {
+            var ps = profile['periodontal-screening'][i];
+            $('#' + ps).prop('checked','checked').trigger('change');
+        }
+    }
+    if(profile['occlusion']) {
+        for (var i = profile['occlusion'].length - 1; i >= 0; i--) {
+            var oc = profile['occlusion'][i];
+            $('#' + oc).prop('checked','checked').trigger('change');
+        }
+    }
+    if(profile['appliances']) {
+        for (var i = profile['appliances'].length - 1; i >= 0; i--) {
+            var ap = profile['appliances'][i];
+            $('#' + ap).prop('checked','checked').trigger('change');
+        }
+    }
+    if(profile['xray-taken']){
+        for (var i = profile['xray-taken'].length - 1; i >= 0; i--) {
+            var xr = profile['xray-taken'][i];
+            $('#' + xr).prop('checked','checked').trigger('change');
+        }
+    }
+    if(profile['tmd']){
+        for (var i = profile['tmd'].length - 1; i >= 0; i--) {
+            var tm = profile['tmd'][i];
+            $('#' + tm).prop('checked','checked').trigger('change');
+        }
     }
     $('#other-disease').val(profile['other-disease']);
      data = profile['chart'];
      loadDentalData();
 
+     //load visits
+     var visits = profile['visits'];
+    //     profile.visits.ensureIndex({fieldName: 'id', unique: true}, function(err){
+    //     if(err) throw err;
+    // });
+     if(visits && visits.length > 0) {
+        for (var i = visits.length - 1; i >= 0; i--) {
+            var visit = visits[i];
+            visit = '<tr class="visits-row">' +
+                    '<td class="treatment-date">' + visit.treatment_date + '</td>' +
+                    '<td class="tooth-nos">' + visit.tooth_nos +  '</td>' +
+                    '<td class="procedure">' + visit.procedure +  '</td>' +
+                    '<td class="dentists">' + visit.dentists +  '</td>' +
+                    '<td class="charged">' + visit.charged +  '</td>' +
+                    '<td class="paid">' + visit.paid +  '</td>' +
+                    '<td class="balance">' + visit.balance +  '</td>' +
+                    '<td class="next-appt">' + visit.next_appt +  '</td>' +
+                    '<td><a href="#" class="remove-visit"  id="' + visit.id + '"><span class="oi oi-x"></span></a></td>' +
+                    '</tr>';
+        $('#visits-table').append(visit);
+        }
+     }
 } /*----------  end load profile --------------*/
+/*----------  ON #paid keyup --------------*/
+$('#paid').on('keyup', function() {
+var charged = $('#charged').val();
+var paid = $('#paid').val();
+if(charged > paid) {
+    var balance = charged - paid;
+    $('#balance').val(balance);
+}
+console.log('charged: ' + charged);
+console.log('paid: ', paid);
+});
+
+
+/*----------  ON Add --------------*/
+$('#add-treatment').on('click',function(){
+    var new_id = uuidv1();
+    var treatment_date = $('#treatment-date').val();
+    var procedure = $('#procedure').val();
+    var tooth_nos = $('#tooth-nos').val();
+    var dentists = $('#dentists').val();
+    var charged = $('#charged').val();
+    var paid = $('#paid').val();
+    var balance = $('#balance').val();
+    var next_appt = $('#next-appt').val();
+    var valid = treatment_date ? 'valid' : 'invalid';
+    var valid2 = treatment_date ? 'invalid' : 'valid';
+    $('#treatment-date').addClass('is-' + valid).removeClass('is-' + valid2);
+    valid = procedure ? 'valid' : 'invalid';
+    valid2 = procedure ? 'invalid' : 'valid';
+    $('#procedure').addClass('is-' + valid).removeClass('is-' + valid2);
+    valid = tooth_nos ? 'valid' : 'invalid';
+    valid2 = tooth_nos ? 'invalid' : 'valid';
+    $('#tooth-nos').addClass('is-' + valid).removeClass('is-' + valid2);
+    valid = dentists ? 'valid' : 'invalid';
+    valid2 = dentists ? 'invalid' : 'valid';
+    $('#dentists').addClass('is-' + valid).removeClass('is-' + valid2);
+    valid = charged ? 'valid' : 'invalid';
+    valid2 = charged ? 'invalid' : 'valid';
+    $('#charged').addClass('is-' + valid).removeClass('is-' + valid2);
+    valid = paid ? 'valid' : 'invalid';
+    valid2 = paid ? 'invalid' : 'valid';
+    $('#paid').addClass('is-' + valid).removeClass('is-' + valid2);
+    valid = balance ? 'valid' : 'invalid';
+    valid2 = balance ? 'invalid' : 'valid';
+    $('#balance').addClass('is-' + valid).removeClass('is-' + valid2);
+    valid = next_appt ? 'valid' : 'invalid';
+    valid2 = next_appt ? 'invalid' : 'valid';
+    $('#next-appt').addClass('is-' + valid).removeClass('is-' + valid2);
+
+
+    if(!treatment_date || !procedure || !tooth_nos || !dentists || !charged || !paid || !balance || !next_appt) return;
+    var visit = '<tr class="visits-row">' +
+                    '<td class="treatment-date">' + treatment_date + '</td>' +
+                    '<td class="tooth-nos">' + tooth_nos +  '</td>' +
+                    '<td class="procedure">' + procedure +  '</td>' +
+                    '<td class="dentists">' + dentists +  '</td>' +
+                    '<td class="charged">' + charged +  '</td>' +
+                    '<td class="paid">' + paid +  '</td>' +
+                    '<td class="balance">' + balance +  '</td>' +
+                    '<td class="next-appt">' + next_appt +  '</td>' +
+                    '<td><a class="remove-visit" id="'+ new_id +'"><span class="oi oi-x"></span></a></td>' +
+                    '</tr>';
+    $('#visits-table').append(visit);
+});
+/*----------  ON delete --------------*/
+$('.remove-visit').on('click', () => {
+    console.log($(this).attr('id'));
+});
+
 // -- close button --
 $('.close-button').on( 'click', () => {
         ipcRenderer.send('profile:close', null);
@@ -295,4 +484,10 @@ $('.print-preview').on( 'click', () => {
 // on document ready, load selected profile if exists
 $(document).ready(function(){
 
-});
+
+}); //end ready
+/*----------  ON remove --------------*/
+
+// $('.remove-visit').on('click', function() {
+//     console.log($(this));
+// });

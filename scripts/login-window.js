@@ -1,4 +1,3 @@
-const environment = 'production';
 const electron = require('electron');
 const { ipcRenderer } = electron;
 const form = document.querySelector('form');
@@ -7,7 +6,8 @@ const path = require('path');
 var Datastore = require('nedb');
 var dbpath;
 
-if(environment == 'production') {
+const isProduction = require('electron-is-running-in-asar');
+if(isProduction()) {
         dbpath = path.join(__dirname,'../../../db/user.db');
     } else {
         dbpath = path.join(__dirname,'../scripts/user_db');
