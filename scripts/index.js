@@ -13,7 +13,7 @@ let loginWindow;
 let profileWindow;
 let settingsWindow;
 let previewWindow;
-var fullscreen = false;
+var fullscreen = true;
 
 // Listen for app to be ready
 app.on('ready', () => {
@@ -57,7 +57,11 @@ function createLoginWindow(){
         slashes: true
     }));
     loginWindow.setMenuBarVisibility(false);  //remove menu
-    loginWindow.on('close', () => { loginWindow = null; });
+    loginWindow.on('close', () => { loginWindow = null;
+        if(mainWindow == null && loginWindow == null && profileWindow == null && settingsWindow == null && previewWindow == null ){
+            app.quit();
+        }
+    });
 }
 /*----------------------------------------*
  *              PROFILE WINDOW            *

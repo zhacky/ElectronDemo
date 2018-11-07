@@ -9,10 +9,11 @@ var path = require('path');
 var dbpath;
 
 if(isProduction()) {
-    dbpath = path.join(__dirname,'../../../db/user.db');
-} else {
-    dbpath = path.join(__dirname,'../scripts/user_db');
-}
+    /*----------          location on outside folder dentistapp-win32-ia32  --------------*/
+        dbpath = path.join(__dirname,'../../../../db/user.db');
+    } else {
+        dbpath = path.join(__dirname,'../scripts/user_db');
+    }
 var db = new Datastore({filename: dbpath, autoload: true });
 // add form listener
 var form = document.querySelector('form');

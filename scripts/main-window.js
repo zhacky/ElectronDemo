@@ -1,6 +1,5 @@
 const electron = require('electron');
 const isProduction = require('electron-is-running-in-asar');
-console.log(isProduction());
 const { ipcRenderer } = electron;
 // load database
 var Datastore = require('nedb');
@@ -9,7 +8,13 @@ var db;
 // get dbpath from inc.dat file (should be configurable)
 const fs = require('fs');
 var dbpath;
-dbpath = fs.readFileSync(path.join(__dirname,'../../inc.dat'),'utf8');
+if (isProduction()) {
+dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
+} else {
+dbpath = path.join(__dirname,'../scripts/profiles_db');
+}
+/*----------                                  location on outside folder dentistapp-win32-ia32  --------------*/
+
 db = new Datastore({filename: dbpath, autoload: true });
 // profiles array
 var profiles = [];

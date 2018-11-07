@@ -8,7 +8,8 @@ var dbpath;
 
 const isProduction = require('electron-is-running-in-asar');
 if(isProduction()) {
-        dbpath = path.join(__dirname,'../../../db/user.db');
+    /*----------          location on outside folder dentistapp-win32-ia32  --------------*/
+        dbpath = path.join(__dirname,'../../../../db/user.db');
     } else {
         dbpath = path.join(__dirname,'../scripts/user_db');
     }

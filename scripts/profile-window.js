@@ -7,11 +7,11 @@ const path = require('path');
 var profile;
 var isNew = false;
 var dbpath;
-if(isProduction()) {
-        dbpath = path.join(__dirname,'../../../db/profiles.db');
-    } else {
-        dbpath = path.join(__dirname,'../scripts/profiles_db');
-    }
+if (isProduction()) {
+dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
+} else {
+dbpath = path.join(__dirname,'../scripts/profiles_db');
+}
 // db
     var db = new Datastore({ filename: dbpath, autoload: true });
 
