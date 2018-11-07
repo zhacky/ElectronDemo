@@ -9,13 +9,13 @@ var db;
 const fs = require('fs');
 var dbpath;
 if (isProduction()) {
+/*---------- location on outside folder dentistapp-win32-ia32  --------------*/
 dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
 } else {
 dbpath = path.join(__dirname,'../scripts/profiles_db');
 }
-/*----------                                  location on outside folder dentistapp-win32-ia32  --------------*/
-
-db = new Datastore({filename: dbpath, autoload: true });
+// db
+db = new Datastore({ filename: dbpath, autoload: true });
 // profiles array
 var profiles = [];
 var selected;

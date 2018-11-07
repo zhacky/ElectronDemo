@@ -1,20 +1,25 @@
-const isProduction = require('electron-is-running-in-asar');
-const uuidv1 = require('uuid/v1');
 const electron = require('electron');
+const isProduction = require('electron-is-running-in-asar');
 const { ipcRenderer } = electron;
-const Datastore = require('nedb');
-const path = require('path');
-var profile;
-var isNew = false;
+// load database
+var Datastore = require('nedb');
+var path = require('path');
+var db;
+// get dbpath from inc.dat file (should be configurable)
+const fs = require('fs');
 var dbpath;
 if (isProduction()) {
+/*---------- location on outside folder dentistapp-win32-ia32  --------------*/
 dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
 } else {
 dbpath = path.join(__dirname,'../scripts/profiles_db');
 }
 // db
-    var db = new Datastore({ filename: dbpath, autoload: true });
-
+db = new Datastore({ filename: dbpath, autoload: true });
+// profile is new or edit only
+var isNew = false;
+var profile;
+const uuidv1 = require('uuid/v1');
     const form = document.querySelector('form');
     // save function
     form.addEventListener('submit', submitProfileForm );
@@ -468,6 +473,12 @@ $('#add-treatment').on('click',function(){
                     '<td><a href="javascript: removeVisit(`' + new_id + '`);" class="remove-visit"><span class="oi oi-x"></span></a></td>' +
                     '</tr>';
     $('#visits-table').append(visit);
+    // add to balance
+    var bal = parseFloat(balance);
+    var txt_total_balance = $('#total-balance').text().substring(1);
+    var current_bal = parseFloat(txt_total_balance);
+    current_bal += bal;
+    $('#total-balance').text('₱' + current_bal.toFixed(2));
 });
 /*----------  ON delete --------------*/
 function removeVisit( visit_id ){
