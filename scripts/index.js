@@ -17,8 +17,8 @@ var fullscreen = false;
 
 // Listen for app to be ready
 app.on('ready', () => {
-   createMainWindow();
-   // createLoginWindow();
+   // createMainWindow();
+   createLoginWindow();
 });
 app.on('Window-all-closed',() => {
         app.quit();
@@ -186,6 +186,17 @@ ipcMain.on('main:confirm-delete', (e,item) => {
     const CANCEL_BUTTON = 1;
         if(result === OK_BUTTON ) {
             e.sender.send('main:confirmed-delete', item);
+        }
+ });
+
+ipcMain.on('profile:remove-record', (e,item) => {
+    var title = 'Confirm Remove Record';
+    var message = 'Are you sure you want to remove this record?\r\nThis cannot be undone.';
+    var result = dialog.showMessageBox({browserWindow: mainWindow, type: 'info', buttons: ['OK','Cancel'], title: title, message: message });
+    const OK_BUTTON = 0;
+    const CANCEL_BUTTON = 1;
+        if(result === OK_BUTTON ) {
+            e.sender.send('profile:confirmed-remove', item);
         }
  });
 

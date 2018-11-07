@@ -384,9 +384,12 @@ function loadProfile(){
     //     if(err) throw err;
     // });
      if(visits && visits.length > 0) {
+        var total_b = 0.00;
+        var t_bstring = '';
         for (var i = visits.length - 1; i >= 0; i--) {
             var visit = visits[i];
-            visit = '<tr class="visits-row">' +
+            total_b = total_b + (parseFloat(visit.balance));
+            visit = '<tr class="visits-row" id="' + visit.id + '">' +
                     '<td class="treatment-date">' + visit.treatment_date + '</td>' +
                     '<td class="tooth-nos">' + visit.tooth_nos +  '</td>' +
                     '<td class="procedure">' + visit.procedure +  '</td>' +
@@ -395,17 +398,18 @@ function loadProfile(){
                     '<td class="paid">' + visit.paid +  '</td>' +
                     '<td class="balance">' + visit.balance +  '</td>' +
                     '<td class="next-appt">' + visit.next_appt +  '</td>' +
-                    '<td><a href="#" class="remove-visit"  id="' + visit.id + '"><span class="oi oi-x"></span></a></td>' +
+                    '<td><a href="javascript: removeVisit(`' + visit.id + '`);" class="remove-visit"><span class="oi oi-x"></span></a></td>' +
                     '</tr>';
         $('#visits-table').append(visit);
         }
+        $('#total-balance').text('₱' + total_b.toFixed(2));
      }
 } /*----------  end load profile --------------*/
 /*----------  ON #paid keyup --------------*/
 $('#paid').on('keyup', function() {
 var charged = $('#charged').val();
 var paid = $('#paid').val();
-if(charged > paid) {
+if(charged >= paid) {
     var balance = charged - paid;
     $('#balance').val(balance);
 }
@@ -452,7 +456,7 @@ $('#add-treatment').on('click',function(){
 
 
     if(!treatment_date || !procedure || !tooth_nos || !dentists || !charged || !paid || !balance || !next_appt) return;
-    var visit = '<tr class="visits-row">' +
+    var visit = '<tr class="visits-row" id="'+ new_id +'">' +
                     '<td class="treatment-date">' + treatment_date + '</td>' +
                     '<td class="tooth-nos">' + tooth_nos +  '</td>' +
                     '<td class="procedure">' + procedure +  '</td>' +
@@ -461,15 +465,33 @@ $('#add-treatment').on('click',function(){
                     '<td class="paid">' + paid +  '</td>' +
                     '<td class="balance">' + balance +  '</td>' +
                     '<td class="next-appt">' + next_appt +  '</td>' +
-                    '<td><a class="remove-visit" id="'+ new_id +'"><span class="oi oi-x"></span></a></td>' +
+                    '<td><a href="javascript: removeVisit(`' + new_id + '`);" class="remove-visit"><span class="oi oi-x"></span></a></td>' +
                     '</tr>';
     $('#visits-table').append(visit);
 });
 /*----------  ON delete --------------*/
-$('.remove-visit').on('click', () => {
-    console.log($(this).attr('id'));
+function removeVisit( visit_id ){
+    if(visit_id) {
+        ipcRenderer.send('profile:remove-record', visit_id);
+    }
+}
+ipcRenderer.on('profile:confirmed-remove',(e, item) => {
+    var record = item;
+    removeRecord(record);
 });
-
+function removeRecord( record_id ) {
+    $('#'+ record_id).remove();
+    var visits = profile['visits'];
+    var total_b = 0;
+    for (var i = visits.length - 1; i >= 0; i--) {
+        var visit = visits[i];
+        console.log('visit.id: ' + visit.id + '\nrecord id: ' + record_id);
+        if(visit.id != record_id) {
+            total_b = total_b + (parseFloat(visit.balance));
+        }
+    }
+    $('#total-balance').text('₱' + total_b.toFixed(2));
+}
 // -- close button --
 $('.close-button').on( 'click', () => {
         ipcRenderer.send('profile:close', null);
@@ -478,16 +500,4 @@ $('.close-button').on( 'click', () => {
 $('.print-preview').on( 'click', () => {
         ipcRenderer.send('profile:preview', profile);
 });
-// -- print button --
 
-
-// on document ready, load selected profile if exists
-$(document).ready(function(){
-
-
-}); //end ready
-/*----------  ON remove --------------*/
-
-// $('.remove-visit').on('click', function() {
-//     console.log($(this));
-// });
