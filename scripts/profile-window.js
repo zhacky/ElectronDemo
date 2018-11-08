@@ -7,6 +7,7 @@ var path = require('path');
 var db;
 // get dbpath from inc.dat file (should be configurable)
 const fs = require('fs');
+// const jet = require('fs-jetpack');
 var dbpath;
 if (isProduction()) {
 /*---------- location on outside folder dentistapp-win32-ia32  --------------*/
@@ -14,6 +15,7 @@ dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
 } else {
 dbpath = path.join(__dirname,'../scripts/profiles_db');
 }
+const imagepath = path.dirname(dbpath);
 // db
 db = new Datastore({ filename: dbpath, autoload: true });
 // profile is new or edit only
@@ -25,10 +27,30 @@ const uuidv1 = require('uuid/v1');
     form.addEventListener('submit', submitProfileForm );
     function submitProfileForm(e){
         e.preventDefault();
-
         var firstname = $('#firstname').val();
         var middlename = $('#middlename').val();
         var lastname = $('#lastname').val();
+        // save photo based on first and last name --//
+        var photo = $('#photo').attr('src');
+        console.log('photo: ' + photo);
+        console.log('ext: ' + path.extname(photo));
+        var dbphoto = '';
+        if(photo != '../images/avatar_2x.png' || path.extname(photo) != '.png') {
+            console.log('imagepath: ' + imagepath);
+            dbphoto = path.join(imagepath,firstname.toLowerCase() + '-' + middlename.toLowerCase() + '-' + lastname.toLowerCase() + '.png');
+            console.log('dbphoto: ' + dbphoto);
+            var imgBuffer = processBase64Image(photo);
+            console.log('imgBuffer: ' + imgBuffer);
+            fs.writeFile(dbphoto, imgBuffer.data, function(err){
+                if(err){
+                               console.log('Cannot save the image into file.\n' + err);
+                           }else{
+                               console.log('Image saved succesfully');
+                           }
+            });
+            console.log('dbphoto: ' + dbphoto);
+        }
+        //-------end photo save---------//
         var nickname = $('#nickname').val();
         var sex = $('input[name=sex]:checked').val();
         var age = $('#age').val();
@@ -137,6 +159,7 @@ const uuidv1 = require('uuid/v1');
         if (profile == null ) {
             console.log('profile is null');
             profile = {
+                photo: dbphoto,
                 firstname: firstname,
                 middlename: middlename,
                 lastname: lastname,
@@ -199,6 +222,7 @@ const uuidv1 = require('uuid/v1');
             var key = profile['_id'];
             profile = {
                 _id: key,
+                photo: dbphoto,
                 firstname: firstname,
                 middlename: middlename,
                 lastname: lastname,
@@ -292,6 +316,7 @@ function getProfile( key ) {
 }
 // load profile into html
 function loadProfile(){
+    $('#photo').attr('src', profile['photo']);
     $('#firstname').val(profile['firstname']);
     $('#middlename').val(profile['middlename']);
     $('#lastname').val(profile['lastname']);
@@ -512,3 +537,16 @@ $('.print-preview').on( 'click', () => {
         ipcRenderer.send('profile:preview', profile);
 });
 
+// function for converting data uri to buffer date
+function processBase64Image(dataString){
+      var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),response = {};
+
+      if (matches.length !== 3) {
+          return new Error('Invalid input string');
+      }
+
+      response.type = matches[1];
+      response.data = Buffer.from(matches[2], 'base64');
+
+      return response;
+}

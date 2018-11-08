@@ -11,3 +11,14 @@ body {
 #total-balance {
     margin: 10px 254px 10px 28px;
 }
+.img-circle {
+    border-radius: 50%;
+}
+
+#photo {
+    width: 128px;
+    height: 128px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center center;
+}
