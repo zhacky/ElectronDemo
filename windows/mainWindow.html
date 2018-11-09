@@ -6,15 +6,21 @@
         <link rel="stylesheet" href="./../assets/font/css/open-iconic-bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../styles/libs/fullcalendar.min.css">
         <link rel="stylesheet" href="../styles/main.css">
+        <script type="text/javascript">
+
+        </script>
     </head>
     <body>
-<!--         <div class="container">
+        <div class="container">
             <div class="row">
-                <div class="col-md-6">
+<!--                 <div class="col-md-6">
                     <canvas id="clientChart" width="400" height="400"></canvas>
                 </div>
+                <div class="col-md-5">
+                    <div id="calendar"></div>
+                </div> -->
             </div>
-        </div> -->
+        </div>
         <div class="container pt-5">
             <div class="input-group">
                 <div class="input-group-prepend">
@@ -65,29 +71,6 @@
         <script>if (window.module) module = window.module;</script>
         <!-- custom scripts -->
         <script type="text/javascript" src="../scripts/main-window.js"></script>
-        <script type="text/javascript">
-            var data = {
-                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                datasets: [{
-                    label: 'Appointments',
-                    data: [12, 19, 3, 5]
-                }],
-                options: {
-                    scales: {
-                    yAxes: [{
-                    ticks: {
-                            beginAtZero:true
-                            }
-                     }]
-                }
-            },
-        };
-            var ctx = document.getElementById('clientChart').getContext('2d');
-            var clientChart = new Chart(ctx, {
-                type: 'line',
-                data: data
-            });
-
-        </script>
+        <!-- <script type="text/javascript" src="../scripts/main-chart.js"></script> -->
     </body>
 </html>
