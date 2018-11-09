@@ -9,7 +9,7 @@ var db;
 const fs = require('fs');
 // const jet = require('fs-jetpack');
 var dbpath;
-if (isProduction()) {
+if (isProduction() || true) {
 /*---------- location on outside folder dentistapp-win32-ia32  --------------*/
 dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
 } else {
@@ -35,7 +35,7 @@ const uuidv1 = require('uuid/v1');
         console.log('photo: ' + photo);
         console.log('ext: ' + path.extname(photo));
         var dbphoto = '';
-        if(photo != '../images/avatar_2x.png' || path.extname(photo) != '.png') {
+        if(photo != '../images/avatar_2x.png' && path.extname(photo) != '.png') {
             console.log('imagepath: ' + imagepath);
             dbphoto = path.join(imagepath,firstname.toLowerCase() + '-' + middlename.toLowerCase() + '-' + lastname.toLowerCase() + '.png');
             console.log('dbphoto: ' + dbphoto);
@@ -316,7 +316,10 @@ function getProfile( key ) {
 }
 // load profile into html
 function loadProfile(){
-    $('#photo').attr('src', profile['photo']);
+    var img = profile['photo'];
+    if(path.extname(img) == '.png'){
+        $('#photo').attr('src', profile['photo']);
+    }
     $('#firstname').val(profile['firstname']);
     $('#middlename').val(profile['middlename']);
     $('#lastname').val(profile['lastname']);
@@ -410,9 +413,7 @@ function loadProfile(){
 
      //load visits
      var visits = profile['visits'];
-    //     profile.visits.ensureIndex({fieldName: 'id', unique: true}, function(err){
-    //     if(err) throw err;
-    // });
+
      if(visits && visits.length > 0) {
         var total_b = 0.00;
         var t_bstring = '';
@@ -437,8 +438,8 @@ function loadProfile(){
 } /*----------  end load profile --------------*/
 /*----------  ON #paid keyup --------------*/
 $('#paid').on('keyup', function() {
-var charged = $('#charged').val();
-var paid = $('#paid').val();
+var charged = parseFloat($('#charged').val());
+var paid = parseFloat($('#paid').val());
 if(charged >= paid) {
     var balance = charged - paid;
     $('#balance').val(balance);

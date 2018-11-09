@@ -8,7 +8,7 @@ var db;
 // get dbpath from inc.dat file (should be configurable)
 const fs = require('fs');
 var dbpath;
-if (isProduction()) {
+if (isProduction() || true) {
 /*---------- location on outside folder dentistapp-win32-ia32  --------------*/
 dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
 } else {
