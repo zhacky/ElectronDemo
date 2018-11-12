@@ -10,3 +10,6 @@
 .profile-list table thead a:hover {
     color: #7c7c7c;
 }
+.profile-list table tr td {
+    text-transform: capitalize;
+}

@@ -25,7 +25,9 @@ body {
 /** force capitalization */
 #firstname, #lastname, #middlename,
 #nickname, #religion, #nationality,
-#home-address, #guardian-name
+#home-address, #guardian-name,
+#referrer-name, #previous-dentist,
+#physician
 
 {
     text-transform: capitalize;

@@ -509,6 +509,14 @@ $('#add-treatment').on('click',function(){
     var current_bal = parseFloat(txt_total_balance);
     current_bal += bal;
     $('#total-balance').text('₱' + current_bal.toFixed(2));
+    // clear all
+    $('#treatment-date').val(undefined);
+    $('#procedure').val(undefined);
+    $('#tooth-nos').val(undefined);
+    $('#charged').val(undefined);
+    $('#paid').val(undefined);
+    $('#balance').val(undefined);
+    $('#next-appt').val(undefined);
 });
 /*----------  ON delete --------------*/
 function removeVisit( visit_id ){
