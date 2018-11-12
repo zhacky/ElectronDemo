@@ -13,10 +13,49 @@ let loginWindow;
 let profileWindow;
 let settingsWindow;
 let previewWindow;
-var fullscreen = true;
+var fullscreen = false;
 
+// expose the class
+class Store {
+  constructor(opts) {
+    // Renderer process has to get `app` module via `remote`, whereas the main process can get it directly
+    // app.getPath('userData') will return a string of the user's app data directory path.
+    const userDataPath = (electron.app || electron.remote.app).getPath('userData');
+    // We'll use the `configName` property to set the file name and path.join to bring it all together as a string
+    console.log('data path: ' + userDataPath);
+    this.path = path.join(userDataPath, opts.configName + '.json');
+    console.log('this path: ' + this.path);
+    this.data = parseDataFile(this.path, opts.defaults);
+  }
+
+  // This will just return the property on the `data` object
+  get(key) {
+    return this.data[key];
+  }
+
+  // ...and this will set it
+  set(key, val) {
+    this.data[key] = val;
+    // Wait, I thought using the node.js' synchronous APIs was bad form?
+    // We're not writing a server so there's not nearly the same IO demand on the process
+    // Also if we used an async API and our app was quit before the asynchronous write had a chance to complete,
+    // we might lose that data. Note that in a real app, we would try/catch this.
+    fs.writeFileSync(this.path, JSON.stringify(this.data));
+  }
+}
+module.exports = Store;
+const store = new Store({
+  // We'll call our data file 'user-preferences'
+  configName: 'user-preferences',
+  defaults: {
+    // 800x600 is the default size of our window
+    windowBounds: { width: 800, height: 600 }
+  }
+});
 // Listen for app to be ready
 app.on('ready', () => {
+
+
    // createMainWindow();
    createLoginWindow();
 });
@@ -27,7 +66,16 @@ app.on('Window-all-closed',() => {
  *              MAIN WINDOW               *
  *----------------------------------------*/
 function createMainWindow(){
-    mainWindow = new BrowserWindow({width: 1280, height: 1024, fullscreen: fullscreen, icon: path.join(__dirname,'../images/teeth-icon.png')});
+    let { width, height } = store.get('windowBounds');
+    mainWindow = new BrowserWindow({width: width, height: height, fullscreen: fullscreen, icon: path.join(__dirname,'../images/teeth-icon.png')});
+    mainWindow.on('resize', () => {
+        // The event doesn't pass us the window size, so we call the `getBounds` method which returns an object with
+        // the height, width, and x and y coordinates.
+        let { width, height } = mainWindow.getBounds();
+        // Now that we have them, save them using the `set` method.
+        store.set('windowBounds', { width, height });
+      });
+
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, '../windows/mainWindow.html'),
         protocol: 'file:',
@@ -67,7 +115,16 @@ function createLoginWindow(){
  *              PROFILE WINDOW            *
  *----------------------------------------*/
 function createProfileWindow() {
+    let { width, height } = store.get('windowBounds');
     profileWindow = new BrowserWindow({width: 1280, height: 1024, fullscreen: fullscreen, icon: path.join(__dirname,'../images/teeth-icon.png')});
+      profileWindow.on('resize', () => {
+    // The event doesn't pass us the window size, so we call the `getBounds` method which returns an object with
+    // the height, width, and x and y coordinates.
+    let { width, height } = profileWindow.getBounds();
+    // Now that we have them, save them using the `set` method.
+    store.set('windowBounds', { width, height });
+  });
+
     profileWindow.loadURL(url.format({
         pathname: path.join(__dirname, '../windows/profileWindow.html'),
         protocol: 'file:',
@@ -172,7 +229,7 @@ ipcMain.on('console:log', (e,item) => {
 
 ipcMain.on('main:double-click',(e,item) => {
     fullscreen = !fullscreen;
-    console.log('error:' + e + ' / fullscreen: ' + fullscreen);
+    // console.log('error:' + e + ' / fullscreen: ' + fullscreen);
     mainWindow.setFullScreen(fullscreen);
 });
 ipcMain.on('general:double-click',(e,item) => {
@@ -213,6 +270,22 @@ var result = dialog.showOpenDialog({browserWindow: settingsWindow, filters: [{na
     }
 });
 
+/*----------------------------------------*
+ *              Config Class              *
+ *----------------------------------------*/
+
+
+
+function parseDataFile(filePath, defaults) {
+  // We'll try/catch it in case the file doesn't exist yet, which will be the case on the first application run.
+  // `fs.readFileSync` will return a JSON string which we then parse into a Javascript object
+  try {
+    return JSON.parse(fs.readFileSync(filePath));
+  } catch(error) {
+    // if there was some kind of error, return the passed in defaults instead.
+    return defaults;
+  }
+}
 
 
 

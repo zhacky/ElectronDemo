@@ -16,9 +16,21 @@ body {
 }
 
 #photo {
-    width: 128px;
+    width: 171px;
     height: 128px;
     overflow: hidden;
     background-size: cover;
     background-position: center center;
+}
+/** force capitalization */
+#firstname, #lastname, #middlename,
+#nickname, #religion, #nationality,
+#home-address, #guardian-name
+
+{
+    text-transform: capitalize;
+}
+/** force uppercase */
+#bloodtype {
+    text-transform: uppercase;
 }

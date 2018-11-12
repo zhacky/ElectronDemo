@@ -9,12 +9,13 @@ var db;
 const fs = require('fs');
 // const jet = require('fs-jetpack');
 var dbpath;
-if (isProduction() || true) {
+// if (isProduction() || true) {
 /*---------- location on outside folder dentistapp-win32-ia32  --------------*/
-dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
-} else {
-dbpath = path.join(__dirname,'../scripts/profiles_db');
-}
+// dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
+// } else {
+const userDataPath = (electron.app || electron.remote.app).getPath('userData');
+dbpath = path.join(userDataPath, 'profiles.db');
+// }
 const imagepath = path.dirname(dbpath);
 // db
 db = new Datastore({ filename: dbpath, autoload: true });
@@ -34,21 +35,17 @@ const uuidv1 = require('uuid/v1');
         var photo = $('#photo').attr('src');
         console.log('photo: ' + photo);
         console.log('ext: ' + path.extname(photo));
-        var dbphoto = '';
-        if(photo != '../images/avatar_2x.png' && path.extname(photo) != '.png') {
-            console.log('imagepath: ' + imagepath);
-            dbphoto = path.join(imagepath,firstname.toLowerCase() + '-' + middlename.toLowerCase() + '-' + lastname.toLowerCase() + '.png');
-            console.log('dbphoto: ' + dbphoto);
-            var imgBuffer = processBase64Image(photo);
-            console.log('imgBuffer: ' + imgBuffer);
-            fs.writeFile(dbphoto, imgBuffer.data, function(err){
-                if(err){
-                               console.log('Cannot save the image into file.\n' + err);
-                           }else{
-                               console.log('Image saved succesfully');
-                           }
-            });
-            console.log('dbphoto: ' + dbphoto);
+        if( path.extname(photo).length == 0 ) {
+            // var imgBuffer = processBase64Image(photo);
+            // console.log('imgBuffer: ' + imgBuffer);
+            // fs.writeFile(dbphoto, imgBuffer.data, function(err){
+            //     if(err){
+            //                    console.log('Cannot save the image into file.\n' + err);
+            //                }else{
+            //                    console.log('Image saved succesfully');
+            //                }
+            // });
+            // console.log('dbphoto: ' + dbphoto);
         }
         //-------end photo save---------//
         var nickname = $('#nickname').val();
@@ -159,7 +156,7 @@ const uuidv1 = require('uuid/v1');
         if (profile == null ) {
             console.log('profile is null');
             profile = {
-                photo: dbphoto,
+                photo: photo,
                 firstname: firstname,
                 middlename: middlename,
                 lastname: lastname,
@@ -214,7 +211,12 @@ const uuidv1 = require('uuid/v1');
                 visits: visits
             };
             db.insert(profile, function(err, doc) {
-                console.log('error from insert to profiles.db: ' + err);
+                if(err) {
+                    console.log('error from insert to profiles.db: ' + err);
+                    return;
+                }
+                $('.notification').text('Saved.');
+                ipcRenderer.send('profile:close', null);
             });
         } else {
             // update profile in database
@@ -222,7 +224,7 @@ const uuidv1 = require('uuid/v1');
             var key = profile['_id'];
             profile = {
                 _id: key,
-                photo: dbphoto,
+                photo: photo,
                 firstname: firstname,
                 middlename: middlename,
                 lastname: lastname,
@@ -317,8 +319,10 @@ function getProfile( key ) {
 // load profile into html
 function loadProfile(){
     var img = profile['photo'];
-    if(path.extname(img) == '.png'){
+    if(path.extname(img).length == 0){
         $('#photo').attr('src', profile['photo']);
+    } else {
+        $('#photo').attr('src', '../images/avatar_2x.png');
     }
     $('#firstname').val(profile['firstname']);
     $('#middlename').val(profile['middlename']);
@@ -551,3 +555,43 @@ function processBase64Image(dataString){
 
       return response;
 }
+/*----------------------------------------*
+ *              date defaults             *
+ *----------------------------------------*/
+ $(document).on('ready',function(){
+    $('#treatment-date').val(new Date());
+ });
+ $('#treatment-date').on('change',function(){
+    $('#next-appt').val($(this).val());
+ });
+/*----------------------------------------*
+ *              CAMERA                    *
+ *----------------------------------------*/
+ var enabled = false;
+ var WebCamera = require("webcamjs");
+
+document.getElementById("start").addEventListener('click',function(){
+   if(!enabled){ // Start the camera !
+     enabled = true;
+     WebCamera.attach('#camdemo');
+     console.log("The camera has been started");
+   }else{ // Disable the camera !
+     enabled = false;
+     WebCamera.reset();
+    console.log("The camera has been disabled");
+   }
+},false);
+
+document.getElementById("savefile").addEventListener('click',function(){
+     if(enabled){
+            WebCamera.snap(function(data_uri) {
+                // Save the image in a variable
+                // var imageBuffer = processBase64Image(data_uri);
+                // Start the save dialog to give a name to the file
+                photo = data_uri;
+                $('#photo').attr('src',photo);
+             });
+     }else{
+            alert("Please enable the camera first to take the snapshot !");
+     }
+},false);

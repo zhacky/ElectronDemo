@@ -29,20 +29,24 @@
                         <div class="bio-data p-5">
                             <div class="row">
                                 <div class="text-center form-group col-md-2">
-                                    <img src="../images/avatar_2x.png" alt="Photo" class="avatar img-circle img-thumbnail"  id="photo"/>
-                                    <input type="file" class="text-center center-block file-upload"/>
+                                    <img src="../images/avatar_2x.png" alt="Photo" class="avatar img-thumbnail"  id="photo"/>
+                                    <input type="file" class="text-center center-block file-upload" accept="image/*"/>
                                 </div>
-                                </div><!-- image -->
+                                <div class="text-center form-group col-md-2" style="margin-left: 5px;">
+                                    <div id="camdemo" style="width: 171px; height: 128px; background: #e2e2e2"></div>
+                                    <input type="button" id="start" class="text-center center-block" value="Start/Stop" />&nbsp;&nbsp;<button type="button" id="savefile"><span class="oi oi-camera-slr"></span></button>
+                                </div>
+                                </div><!-- end image row -->
                                 <div class="row">
                                     <!-- NAME -->
+                                    <div class="form-group col">
+                                        <label for="lastname">Lastname</label><input id="lastname" class="form-control" type="text" required>
+                                    </div>
                                     <div class="form-group col">
                                         <label for="firstname">Firstname</label><input id="firstname" class="form-control" type="text" required>
                                     </div>
                                     <div class="form-group col">
                                         <label for="middlename">Middlename</label><input id="middlename" class="form-control" type="text" required>
-                                    </div>
-                                    <div class="form-group col">
-                                        <label for="lastname">Lastname</label><input id="lastname" class="form-control" type="text" required>
                                     </div>
                                 </div>
                                 <div class="row">

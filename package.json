@@ -16,7 +16,8 @@
     "fs-jetpack": "^2.2.0",
     "jquery": "^3.3.1",
     "nedb": "^1.8.0",
-    "popper.js": "^1.14.4"
+    "popper.js": "^1.14.4",
+    "webcamjs": "^1.0.25"
   },
   "devDependencies": {
     "electron": "^3.0.6",

@@ -8,21 +8,24 @@ var db;
 // get dbpath from inc.dat file (should be configurable)
 const fs = require('fs');
 var dbpath;
-if (isProduction() || true) {
+// if (isProduction() || true) {
 /*---------- location on outside folder dentistapp-win32-ia32  --------------*/
-dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
-} else {
-dbpath = path.join(__dirname,'../scripts/profiles_db');
-}
+// dbpath = fs.readFileSync(path.join(__dirname,'../../../../db/inc.dat'),'utf8');
+// } else {
+const userDataPath = (electron.app || electron.remote.app).getPath('userData');
+dbpath = path.join(userDataPath, 'profiles.db');
+// }
 // db
 db = new Datastore({ filename: dbpath, autoload: true });
 // profiles array
 var profiles = [];
 var selected;
 // load list to table
+var pageSize = 10;
+var currentPage = 0;
 function loadProfiles( search ){
     if(search === undefined || search === '' ) {
-        db.find({},(err,docs) => {
+        db.find({}).skip(currentPage * pageSize).limit(pageSize).exec((err,docs) => {
         profiles = docs;
         loadRows();
         }); //end find
@@ -30,7 +33,7 @@ function loadProfiles( search ){
         var arg = new RegExp(search);
         var query = getQuery(selected,arg);
         console.log(selected);
-        db.find(query, (err,docs) => {
+        db.find({query}).skip(currentPage * pageSize).limit(pageSize).exec((err,docs) => {
         profiles = docs;
         loadRows();
         }); //end find search
@@ -78,6 +81,35 @@ function loadRows(){
         var id = $(this).attr('id');
     ipcRenderer.send('main:confirm-delete', id);
     });
+
+// update pagination
+/**
+<ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+</ul>
+*/
+var pages = Math.floor((profiles.length / pageSize)) + 1;
+// load for each page
+// load previous link
+    if( pages > 1){
+        var prevHtml = '<li class="page-item"><a class="page-link" href="#">Previous</a></li>';
+        $('.pagination').append(prevHtml);
+    }
+// load number links
+    for (var i = pages - 1; i >= 0; i--) {
+        var html = '<li class="page-item"><a class="page-link" href="#">' + pages + '</a></li>';
+        $('.pagination').append(html);
+    }
+// load next link
+    if( pages > 1){
+        var prevHtml = '<li class="page-item"><a class="page-link" href="#">Next</a></li>';
+        $('.pagination').append(prevHtml);
+    }
+
 }
 // double click toggle fullscreen
 $(document).on('dblclick','body',(e) => {
