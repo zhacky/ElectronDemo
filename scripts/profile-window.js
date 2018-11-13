@@ -1,6 +1,7 @@
 const electron = require('electron');
 const isProduction = require('electron-is-running-in-asar');
 const { ipcRenderer } = electron;
+const faker = require('faker');
 // load database
 var Datastore = require('nedb');
 var path = require('path');
@@ -26,14 +27,16 @@ const uuidv1 = require('uuid/v1');
     const form = document.querySelector('form');
     // save function
     form.addEventListener('submit', submitProfileForm );
-    function submitProfileForm(e){
+/*----------------------------------------*
+*              SAVE PROFILE               *
+*----------------------------------------*/
+function submitProfileForm(e){
         e.preventDefault();
         var firstname = $('#firstname').val();
         var middlename = $('#middlename').val();
         var lastname = $('#lastname').val();
         // save photo based on first and last name --//
         var photo = $('#photo').attr('src');
-        console.log('photo: ' + photo);
         console.log('ext: ' + path.extname(photo));
         if( path.extname(photo).length == 0 ) {
             // var imgBuffer = processBase64Image(photo);
@@ -154,6 +157,7 @@ const uuidv1 = require('uuid/v1');
 
         // insert into database
         if (profile == null ) {
+            //------------------ new profile ----------------------//
             console.log('profile is null');
             profile = {
                 photo: photo,
@@ -319,7 +323,14 @@ function getProfile( key ) {
 // load profile into html
 function loadProfile(){
     var img = profile['photo'];
-    if(path.extname(img).length == 0){
+    console.log('photo start:');
+    console.log(img);
+    console.log(path.extname(img));
+    console.log('photo end:');
+
+    console.log('img is true: ' + (!img) );
+
+    if( path.extname(img).length == 0 && img.length > 0 ){
         $('#photo').attr('src', profile['photo']);
     } else {
         $('#photo').attr('src', '../images/avatar_2x.png');
@@ -580,11 +591,13 @@ function processBase64Image(dataString){
 
 document.getElementById("start").addEventListener('click',function(){
    if(!enabled){ // Start the camera !
+       document.getElementById("start").classList.add('powered');
      enabled = true;
      WebCamera.attach('#camdemo');
      console.log("The camera has been started");
    }else{ // Disable the camera !
      enabled = false;
+       document.getElementById("start").classList.remove('powered');
      WebCamera.reset();
     console.log("The camera has been disabled");
    }
@@ -603,3 +616,79 @@ document.getElementById("savefile").addEventListener('click',function(){
             alert("Please enable the camera first to take the snapshot !");
      }
 },false);
+
+/*----------------------------------------*
+*              Fakers                    *
+*----------------------------------------*/
+$('#faker').click(
+function generateProfile() {
+
+    var card = faker.helpers.contextualCard();
+    alert(card);
+    var profileNew = {
+        photo: card.avatar,
+        firstname: card.name,
+        middlename: faker.name.lastName(),
+        lastname: faker.name.lastName(),
+        nickname: card.name,
+        sex: faker.random.objectElement({"m":"male","f":"female"}),
+        age: faker.random.number(63),
+        birthdate: card.dob,
+        telephone: card.phone,
+        religion: faker.random.objectElement({ "rc": "roman catholic", "i": "islam","p": "protestant" }),
+        nationality: "filipino",
+        email: card.email,
+        address: card.address.street + ' ' + card.address.city,
+        occupation: faker.name.jobTitle(),
+        'dental-insurance': '',
+        'effective-date': faker.date.recent(),
+        'guardian-name': '',
+        'guardian-occupation': '',
+        'referrer-name': '',
+        'consultation-reason': '',
+        'previous-dentist': '',
+        'last-dentist-visit': '',
+        physician: '',
+        specialty: '',
+        'office-address': '',
+        'office-number': '',
+        'good-health': '',
+        'medical-treatment': '',
+        'medical-condition': '',
+        'serious-illness': '',
+        'illness-operation': '',
+        hospitalized: '',
+        'hospitalized-when': '',
+        prescription: '',
+        'prescription-what': '',
+        tobacco: '',
+        'alcohol-drugs': '',
+        'other-allergies': '',
+        'other-allergy': '',
+        pregnant: '',
+        nursing: '',
+        'birth-control': '',
+        'blood-pressure': '',
+        'blood-type': '',
+        'other-diseases': '',
+        'other-disease': '',
+        chart: '',
+        'periodontal-screening': '',
+        occlusion: '',
+        appliances: '',
+        'xray-taken': '',
+        tmd: '',
+        visits: ''
+    };
+    //insert
+    db.insert(profileNew, function (err, doc) {
+        if (err) {
+            console.log('error from insert to profiles.db: ' + err);
+            return;
+        }
+        $('.notification').text('Saved.');
+        // ipcRenderer.send('profile:close', null);
+    });
+}
+
+);

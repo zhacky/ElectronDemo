@@ -36,3 +36,6 @@ body {
 #bloodtype {
     text-transform: uppercase;
 }
+.powered {
+    color: #ff0000;
+}

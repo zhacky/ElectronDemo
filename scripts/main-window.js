@@ -17,15 +17,19 @@ dbpath = path.join(userDataPath, 'profiles.db');
 // }
 // db
 db = new Datastore({ filename: dbpath, autoload: true });
+var dbcount;
+db.count({},function(err,count){
+dbcount = count;
+});
 // profiles array
 var profiles = [];
 var selected;
 // load list to table
 var pageSize = 10;
-var currentPage = 0;
+var currentPage = 1;
 function loadProfiles( search ){
     if(search === undefined || search === '' ) {
-        db.find({}).skip(currentPage * pageSize).limit(pageSize).exec((err,docs) => {
+        db.find({}).skip((currentPage-1) * pageSize).limit(pageSize).exec((err,docs) => {
         profiles = docs;
         loadRows();
         }); //end find
@@ -92,25 +96,41 @@ function loadRows(){
     <li class="page-item"><a class="page-link" href="#">Next</a></li>
 </ul>
 */
-var pages = Math.floor((profiles.length / pageSize)) + 1;
+var pages = Math.floor((dbcount / pageSize)) + 1;
 // load for each page
-// load previous link
-    if( pages > 1){
-        var prevHtml = '<li class="page-item"><a class="page-link" href="#">Previous</a></li>';
-        $('.pagination').append(prevHtml);
-    }
+$('.pagination').empty();
 // load number links
-    for (var i = pages - 1; i >= 0; i--) {
-        var html = '<li class="page-item"><a class="page-link" href="#">' + pages + '</a></li>';
-        $('.pagination').append(html);
+for (var i = pages - 1; i >= 0; i--) {
+    var html = '<li class="page-item"><a class="btn page-link page-number" data-page="' + (i + 1) + '" href="#">' + (i + 1) + '</a></li>';
+    $('.pagination').prepend(html);
+}
+// load previous link
+    if (pages > 1) {
+        var disabled = currentPage == 1 ? 'disabled' : '';
+
+        var prevHtml = '<li class="page-item"><a class="btn page-link page-cursor ' + disabled + '" data-page="' + (currentPage - 1) + '" href="#">Previous</a></li>';
+        $('.pagination').prepend(prevHtml);
     }
 // load next link
     if( pages > 1){
-        var prevHtml = '<li class="page-item"><a class="page-link" href="#">Next</a></li>';
-        $('.pagination').append(prevHtml);
+        var disabled = currentPage >= pages ? 'disabled' : '';
+        var nextHtml = '<li class="page-item"><a class="btn page-link page-cursor ' + disabled + '" data-page="' + (currentPage + 1) + '" href="#" ' + disabled + '>Next</a></li>';
+        $('.pagination').append(nextHtml);
     }
+    $('.page-number').on('click', function () {
 
+        var pgNo = parseInt($(this).data('page'));
+        console.log('clicked page: ' + pgNo);
+        currentPage = pgNo;
+        loadProfiles('');
+    });
+    $('.page-cursor').on('click',function(){
+        var pgNo = parseInt($(this).data('page'));
+        currentPage = pgNo;
+        loadProfiles('');
+    });
 }
+
 // double click toggle fullscreen
 $(document).on('dblclick','body',(e) => {
     console.log('double clicked!');
@@ -127,6 +147,8 @@ deleteRow(id);
 $(document).ready(() => {
     $('input[name=search]').focus();
     loadProfiles('');
+
+
 });
 
 // search function
