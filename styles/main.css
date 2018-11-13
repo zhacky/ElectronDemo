@@ -13,3 +13,8 @@
 .profile-list table tr td {
     text-transform: capitalize;
 }
+
+#calendar {
+    /* width: 200px;
+    height:200px; */
+}
