@@ -25,11 +25,13 @@ dbcount = count;
 var profiles = [];
 var selected;
 // load list to table
-var pageSize = 10;
+var pageSize = 20;
 var currentPage = 1;
+var sorting = {lastname: 1};
+var sorting_order = false;
 function loadProfiles( search ){
     if(search === undefined || search === '' ) {
-        db.find({}).skip((currentPage-1) * pageSize).limit(pageSize).exec((err,docs) => {
+        db.find({}).sort(sorting).skip((currentPage-1) * pageSize).limit(pageSize).exec((err,docs) => {
         profiles = docs;
         loadRows();
         }); //end find
@@ -37,7 +39,7 @@ function loadProfiles( search ){
         var arg = new RegExp(search);
         var query = getQuery(selected,arg);
         console.log(selected);
-        db.find({query}).skip(currentPage * pageSize).limit(pageSize).exec((err,docs) => {
+        db.find({query}).sort(sorting).skip(currentPage * pageSize).limit(pageSize).exec((err,docs) => {
         profiles = docs;
         loadRows();
         }); //end find search
@@ -54,7 +56,7 @@ function deleteRow(id){
 
 function loadRows(){
         $('.profile-list table tbody').empty();
-    for (var i = profiles.length - 1; i >= 0; i--) {
+    for (var i = 0; i <= profiles.length - 1; i++) {
         var lname = profiles[i]['lastname'];
         var fname = profiles[i]['firstname'];
         var mname = profiles[i]['middlename'];
@@ -100,9 +102,9 @@ var pages = Math.floor((dbcount / pageSize)) + 1;
 // load for each page
 $('.pagination').empty();
 // load number links
-for (var i = pages - 1; i >= 0; i--) {
+for (var i = 0; i <= pages - 1; i++) {
     var html = '<li class="page-item"><a class="btn page-link page-number" data-page="' + (i + 1) + '" href="#">' + (i + 1) + '</a></li>';
-    $('.pagination').prepend(html);
+    $('.pagination').append(html);
 }
 // load previous link
     if (pages > 1) {
@@ -204,3 +206,60 @@ $('#settings').on('click', () => {
     var item = null;
     ipcRenderer.send('settings:open', item);
  });
+/*----------------------------------------*
+ *           SORTING PROCESS              *
+ *----------------------------------------*/
+$('#last-name-sort').on('click',function(e){
+e.preventDefault();
+console.log('sorting by lastname');
+var order = sorting_order ? 1 : -1;
+sorting = {lastname: order};
+sorting_order = !sorting_order;
+loadProfiles('');
+});
+$('#first-name-sort').on('click',function(e){
+e.preventDefault();
+console.log('sorting by firstname');
+var order = sorting_order ? 1 : -1;
+sorting = {firstname: order};
+sorting_order = !sorting_order;
+loadProfiles('');
+
+});
+$('#middle-name-sort').on('click',function(e){
+e.preventDefault();
+console.log('sorting by middlename');
+var order = sorting_order ? 1 : -1;
+sorting = {middlename: order};
+sorting_order = !sorting_order;
+loadProfiles('');
+
+});
+$('#sex-gender-sort').on('click',function(e){
+e.preventDefault();
+console.log('sorting by gender');
+var order = sorting_order ? 1 : -1;
+sorting = {sex: order};
+sorting_order = !sorting_order;
+loadProfiles('');
+
+});
+$('#age-years-sort').on('click',function(e){
+e.preventDefault();
+console.log('sorting by age');
+var order = sorting_order ? 1 : -1;
+sorting = {age: order};
+sorting_order = !sorting_order;
+loadProfiles('');
+
+});
+$('#home-address-sort').on('click',function(e){
+e.preventDefault();
+console.log('sorting by address');
+var order = sorting_order ? 1 : -1;
+sorting = {address: order};
+sorting_order = !sorting_order;
+loadProfiles('');
+
+});
+
