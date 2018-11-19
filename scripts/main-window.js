@@ -37,10 +37,15 @@ function loadProfiles( search ){
         loadRows();
         }); //end find
     } else {
-        var arg = new RegExp(search);
-        var query = getQuery(selected,arg);
-        console.log(selected);
-        db.find({query}).sort(sorting).skip(currentPage * pageSize).limit(pageSize).exec((err,docs) => {
+        if(selected == undefined) {
+            selected = "1";
+        }
+        var query = getQuery(selected, new RegExp(search));
+        // console.log(selected);
+        // console.log('query:');
+        // console.log(query);
+        // db.find(query).sort(sorting).skip(currentPage * pageSize).limit(pageSize).exec((err,docs) => {
+        db.find(query,(err,docs) => {
         profiles = docs;
         loadRows();
         }); //end find search
@@ -164,6 +169,7 @@ $('input[name=search]').on('change', function(){
 });
 $('#search-select').change(function(){
     var selection = $(this).find("option:selected").val();
+
     selected = selection;
     console.log('selection: ' + selection);
 });

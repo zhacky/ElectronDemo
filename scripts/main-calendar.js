@@ -15,7 +15,7 @@ $(function(){
 //             events: events
 //         }); // end calendar
 
-// });
+});
 
 function countProfiles(){
     for (let i = 0; i < profiles.length; i++) {
