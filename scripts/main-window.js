@@ -23,6 +23,7 @@ dbcount = count;
 });
 // profiles array
 var profiles = [];
+var events = [];
 var selected;
 // load list to table
 var pageSize = 20;
@@ -44,6 +45,7 @@ function loadProfiles( search ){
         loadRows();
         }); //end find search
     }
+
 } // end loadProfiles
 function editRow(id){
     var item = id;
@@ -76,6 +78,8 @@ function loadRows(){
             '<td>' + '<a href="#" class="edit-button" id="'+ pid + '"><span class="oi oi-pencil"></span></a>' + '</td>' +
             '<td>' + '<a href="#" class="delete-button" id="'+ pid + '"><span class="oi oi-x"></span></a>' + '</td>' +
             '</tr>');
+        // load appointments
+        loadDates(profiles[i]);
     }
     // create click event for edit row
     $('.edit-button').on('click', function() {
@@ -131,6 +135,7 @@ for (var i = 0; i <= pages - 1; i++) {
         currentPage = pgNo;
         loadProfiles('');
     });
+
 }
 
 // double click toggle fullscreen
@@ -149,7 +154,6 @@ deleteRow(id);
 $(document).ready(() => {
     $('input[name=search]').focus();
     loadProfiles('');
-
 
 });
 
@@ -207,6 +211,51 @@ $('#settings').on('click', () => {
     ipcRenderer.send('settings:open', item);
  });
 /*----------------------------------------*
+ *              LOADING  DATES            *
+ *----------------------------------------*/
+ function loadDates(pf){
+    // console.log('loading dates...');
+    // events =[{ title: 'Demo', start: '2018-11-25'},];
+            var todayDate = moment().startOf('day');
+            // var YM = todayDate.format('YYYY-MM');
+            // var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
+            // var TODAY = todayDate.format('YYYY-MM-DD');
+            // var TOMORROW = todayDate.clone().add(1, 'day').format('YYYY-MM-DD');
+        //demo
+                if(pf.visits.length > 0) {
+                    for (var i = pf.visits.length - 1; i >= 0; i--) {
+                        var appt = pf.visits[i].next_appt;
+                        var appt_date = moment(appt);
+                        if(appt_date > todayDate) {
+                            console.log('profile id: (with visits) ' + pf._id);
+                            console.log(appt);
+                            var event = { title: pf.lastname + "-" + pf.firstname, start: appt_date.format("YYYY-MM-DD") };
+                            console.log('event: ' + event);
+                            events.push(event);
+                        }
+                    }
+                }
+
+ }
+ function loadCalendar(){
+
+            $('#calendar').fullCalendar({
+
+
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                // right: 'month,agendaWeek,agendaDay,listWeek'
+                right: 'month,agendaDay'
+            },
+            // weekends: false,
+            editable: true,
+            eventLimit: true, // allow "more" link when too many evnts
+            navLinks: true,
+            events: events
+        }); // end calendar
+ }
+/*----------------------------------------*
  *           SORTING PROCESS              *
  *----------------------------------------*/
 $('#last-name-sort').on('click',function(e){
@@ -262,4 +311,7 @@ sorting_order = !sorting_order;
 loadProfiles('');
 
 });
-
+$('#calendar-button').on('click',function(){
+    loadCalendar();
+    $(this).hide();
+});
