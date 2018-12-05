@@ -444,6 +444,7 @@ function loadProfile(){
                     '<td class="paid">' + visit.paid +  '</td>' +
                     '<td class="balance">' + visit.balance +  '</td>' +
                     '<td class="next-appt">' + visit.next_appt +  '</td>' +
+                    '<td><a href="javascript: editVisit(`' + visit.id + '`);" class="edit-visit"><span class="oi oi-pencil"></span></a></td>' +
                     '<td><a href="javascript: removeVisit(`' + visit.id + '`);" class="remove-visit"><span class="oi oi-x"></span></a></td>' +
                     '</tr>';
         $('#visits-table').append(visit);
@@ -511,6 +512,7 @@ $('#add-treatment').on('click',function(){
                     '<td class="paid">' + paid +  '</td>' +
                     '<td class="balance">' + balance +  '</td>' +
                     '<td class="next-appt">' + next_appt +  '</td>' +
+                    '<td><a href="javascript: editVisit(`' + new_id + '`);"  class="edit-visit"><span class="oi-pencil"></span></a></td>' +
                     '<td><a href="javascript: removeVisit(`' + new_id + '`);" class="remove-visit"><span class="oi oi-x"></span></a></td>' +
                     '</tr>';
     $('#visits-table').append(visit);
@@ -535,10 +537,14 @@ function removeVisit( visit_id ){
         ipcRenderer.send('profile:remove-record', visit_id);
     }
 }
+
+
+
 ipcRenderer.on('profile:confirmed-remove',(e, item) => {
     var record = item;
     removeRecord(record);
 });
+
 function removeRecord( record_id ) {
     $('#'+ record_id).remove();
     var visits = profile['visits'];
@@ -551,6 +557,66 @@ function removeRecord( record_id ) {
         }
     }
     $('#total-balance').text('₱' + total_b.toFixed(2));
+}
+
+/*----------------------------------------*
+ *              Modal            *
+ *----------------------------------------*/
+ var modal_visit;
+$("#modal-update").on('click',function(e){
+        e.preventDefault();
+
+        var modal_id = modal_visit.id;
+        var treatment_date = $(".modal-treatment-date").val();
+        var tooth_nos = $(".modal-tooth-nos").val();
+        var procedure = $(".modal-procedure").val();
+        var dentists = $(".modal-dentists").val();
+        var charged = $(".modal-charged").val();
+        var paid = $(".modal-paid").val();
+        var balance = $(".modal-balance").val();
+        var next_appt = $(".modal-next-appt").val();
+        $("#" + modal_id + " td.treatment-date").text(treatment_date);
+        $("#" + modal_id + " td.tooth-nos").text(tooth_nos);
+        $("#" + modal_id + " td.procedure").text(procedure);
+        $("#" + modal_id + " td.dentists").text(dentists);
+        $("#" + modal_id + " td.charged").text(charged);
+        $("#" + modal_id + " td.paid").text(paid);
+        $("#" + modal_id + " td.balance").text(balance);
+        $("#" + modal_id + " td.next-appt").text(next_appt);
+
+        $("#editRowModal").modal("hide");
+        console.log('modal has been updated\n' + 'id: ' + modal_id);
+});
+function editVisit( visit_id ){
+    if(visit_id){
+        //edit
+
+        for(let i = 0, length1 = profile.visits.length; i < length1; i++){
+            if(profile.visits[i].id == visit_id){
+                modal_visit = profile.visits[i];
+                // display current values on modal
+                var treatment_date = modal_visit.treatment_date;
+                var tooth_nos = modal_visit.tooth_nos;
+                var procedure = modal_visit.procedure;
+                var dentists = modal_visit.dentists;
+                var charged = modal_visit.charged;
+                var paid = modal_visit.paid;
+                var balance = modal_visit.balance;
+                var next_appt = modal_visit.next_appt;
+
+                $(".modal-treatment-date").val(treatment_date);
+                $(".modal-tooth-nos").val(tooth_nos);
+                $(".modal-procedure").val(procedure);
+                $(".modal-dentists").val(dentists);
+                $(".modal-charged").val(charged);
+                $(".modal-paid").val(paid);
+                $(".modal-balance").val(balance);
+                $(".modal-next-appt").val(next_appt);
+            }
+        }
+        $("#editRowModal").modal("show");
+
+    }
 }
 // -- close button --
 $('.close-button').on( 'click', () => {
